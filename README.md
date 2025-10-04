@@ -74,8 +74,15 @@ poetry run python3 oatlas.py --start-web-server
 
 ## Atlas
 
-Atlas is a fully-automated (through AI) OSINT tool. It can do all your work for you. Watch a demo here -> [demo](https://drive.google.com/file/d/1foBa7mQOJqXcLsD4xpSen7tXMjR2nQ8R/view?usp=drive_link).
-Contact me at [achintya.jai@owasp.org](mailto:achintya.jai@owasp.org) if you wish to know more!
+Atlas is a fully-automated (through AI) OSINT tool. It can do all your work for you.
+
+Watch a demo here -> [demo](https://drive.google.com/file/d/1foBa7mQOJqXcLsD4xpSen7tXMjR2nQ8R/view?usp=drive_link).
+
+Atlas supports two modes, `AA` and `SAR`. The `AA` mode is the one you're using right now. It just aggregates and analyses information. The `SAR` mode is fully automatic which makes its own plans, executes them, infers and continues from thereon.
+
+PS: Most of the architecture that you see here is to support `atlas`!
+
+> Contact me at [achintya.jai@owasp.org](mailto:achintya.jai@owasp.org) if you wish to know more!
 
 ## Acknowledgements
 
