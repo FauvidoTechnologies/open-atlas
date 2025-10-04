@@ -4,6 +4,8 @@
 
 To know more about `atlas` on which this is based, refer to the [atlas](#atlas) section in the end.
 
+Also, if you want to use some APIs and can't figure out a way to get them, contact me at the email below. I will get you the keys!
+
 ## Installation
 
 Installing `oatlas` is easy. Its written purely in python with some rust bindings for binwalk. Atlas will install all the necessary **external** dependencies by itself.
