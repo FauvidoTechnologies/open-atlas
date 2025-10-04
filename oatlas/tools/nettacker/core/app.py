@@ -13,13 +13,12 @@ from oatlas.logger import get_logger
 
 # Database functions have been moved to the main database manager
 from oatlas.tools.nettacker.core.database import (
-    find_events,
-    remove_old_logs,
     mysql_create_tables,
     mysql_create_database,
     sqlite_create_tables,
     postgres_create_database,
 )
+from oatlas.tools.nettacker.core.database.database import find_events, remove_old_logs
 
 # Commenting this to remind me about this
 # from nettacker.core.graph import create_report

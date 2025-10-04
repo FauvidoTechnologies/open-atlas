@@ -141,7 +141,6 @@ class ArgParser(ArgumentParser):
             die_success()
 
         if options.show_all_functions:
-            log.normal("These are the functions available for the AA (Aggregate-and-Analyse) mode")
             for func, desc in self.functions_desc_dict.items():
                 log.normal(f"{func} - {desc}")
             die_success()
