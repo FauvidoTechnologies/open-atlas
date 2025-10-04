@@ -24,6 +24,7 @@ pip install poetry
 
 ```sh
 poetry install
+make maturin-develop # If you wish to run binwalk
 ```
 
 And you're golden! For oatlas usage, refer the [usage](#usage) section.
@@ -42,6 +43,8 @@ hunter_api_key=None
 isgen_api_key=None
 isgen_bearer=None
 ```
+
+> NOTE: All these are optional. You can use the functions which don't require them freely.
 
 - The `project_id` is for a VertexAI project under which you have sufficient credits. We're slowly working towards an OpenAI port as well for all the functions that are currently using VertexAI.
 - You will need a perplexity key for basic searches.
