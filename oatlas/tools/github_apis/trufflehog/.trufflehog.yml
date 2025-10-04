@@ -1,0 +1,66 @@
+exclude: # exclude matching issues
+  - message: Build directories
+    paths:
+      - build/**
+      - dist/**
+  - message: Examples and data necessary for running auto-tests
+    paths:
+      - docs/*.html
+      - docs/examples/*
+  - message: Trufflehog rules file contains regexes which might trigger the scanner
+    paths:
+      - trufflehog3/static/rules.yml
+  - message: Integrity hash for highlight.min.js
+    # NOTE pattern is re.Pattern, thus escaping of special characters might be required
+    pattern: sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx\+mdg3epi8=
+    paths:
+      - docs/templates/*.mako
+  - message: Integrity hash for materialize.min.css
+    # NOTE pattern is re.Pattern, thus escaping of special characters might be required
+    pattern: sha256-kpeCd0c1zTgJMsU\+s8Pz4CwckI73qwpdYMTxTsRyO8A=
+    paths:
+      - docs/templates/*.mako
+      - trufflehog3/static/report.html.j2
+  - message: Integrity hash for materialize.min.js
+    pattern: sha256-U/cHDMTIHCeMcvehBv1xQ052bPSbJtbuiw4QA9cTKz0=
+    paths:
+      - docs/templates/*.mako
+      - trufflehog3/static/report.html.j2
+  - message: Alphabet used in autotests
+    pattern: abcdefghijklmnopqrstuvwxyz
+    paths:
+      - trufflehog3/helper.py
+      - trufflehog3/models.py
+      - trufflehog3/search.py
+  - message: Commit hash used in autotests
+    pattern: 9e404e6c59d286645b2465aacaf61108ebc12a3a
+    paths:
+      - trufflehog3/source.py
+# NOTE you can also specify IDs or patterns together or without paths, e.g.
+#
+#   - message: Skip ID everywhere
+#     id: high-entropy
+#   - message: Skip ID on specific paths
+#     id: high-entropy
+#     paths:
+#       - tests/data/*
+#
+#   - message: Skip pattern everywhere, case-insensitive
+#     pattern: (?i)not-a-secret
+#   - message: Skip pattern on specific paths, case-insensitive
+#     pattern: (?i)not-a-secret
+#     paths:
+#       - tests/data/*
+
+severity: low # minimum severity filter
+ignore_nosecret: false # ignore inline 'nosecret' annotations
+no_entropy: false # disable entropy checks
+no_pattern: false # disable pattern checks
+
+branch: master # name of the repo branch to scan
+depth: 10000 # max commits depth for searching, only used if `no_history` is false
+since: null # scan from the given commit hash, only used if `no_history` is false
+no_current: false # disable current status check
+no_history: true # disable commit history check
+
+context: 0 # number of context lines to include

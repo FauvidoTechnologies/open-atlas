@@ -1,0 +1,365 @@
+import copy
+import ctypes
+import hashlib
+import importlib
+import random
+import re
+import string
+import time
+from itertools import product
+
+from oatlas.logger import get_logger
+
+log = get_logger()
+
+
+def replace_dependent_response(log, response_dependent):
+    """The `response_dependent` is needed for `eval` below."""
+    if str(log):
+        key_name = re.findall(re.compile("response_dependent\\['\\S+\\]"), log)
+        for i in key_name:
+            try:
+                key_value = eval(i)
+            except Exception:
+                key_value = "response dependent error"
+            log = log.replace(i, " ".join(key_value))
+        return log
+
+
+def merge_logs_to_list(result, log_list=[]):
+    if isinstance(result, dict):
+        for i in result:
+            if "log" == i:
+                log_list.append(result["log"])
+            else:
+                merge_logs_to_list(result[i], log_list)
+    return list(set(log_list))
+
+
+def reverse_and_regex_condition(regex, reverse):
+    if regex:
+        if reverse:
+            return []
+        return list(set(regex))
+    else:
+        if reverse:
+            return True
+        return []
+
+
+def wait_for_threads_to_finish(threads, maximum=None, terminable=False, sub_process=False):
+    while threads:
+        try:
+            for thread in threads:
+                if not thread.is_alive():
+                    threads.remove(thread)
+            if maximum and len(threads) < maximum:
+                break
+            time.sleep(0.01)
+        except KeyboardInterrupt:
+            if terminable:
+                for thread in threads:
+                    terminate_thread(thread)
+            if sub_process:
+                for thread in threads:
+                    thread.kill()
+            return False
+    return True
+
+
+def terminate_thread(thread, verbose=True):
+    """
+    kill a thread https://stackoverflow.com/a/15274929
+    Args:
+        thread: an alive thread
+        verbose: verbose mode/boolean
+    Returns:
+        True/None
+    """
+
+    if verbose:
+        log.info("killing {0}".format(thread.name))
+    if not thread.is_alive():
+        return
+
+    exc = ctypes.py_object(SystemExit)
+    res = ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(thread.ident), exc)
+    if res == 0:
+        raise ValueError("nonexistent thread id")
+    elif res > 1:
+        # if it returns a number greater than one, you're in trouble,
+        # and you should call it again with exc=NULL to revert the effect
+        ctypes.pythonapi.PyThreadState_SetAsyncExc(thread.ident, None)
+        raise SystemError("PyThreadState_SetAsyncExc failed")
+    return True
+
+
+def get_http_header_key(http_header):
+    """
+    Return the HTTP header key based on the full string entered by the user
+    Args:
+        http_header: a string entered by the user following the -H flag
+    Returns:
+        1. The HTTP header key if http_header is a key-value pair
+        2. The http_header itself if http_header is NOT a key_value pair (i.e. http_header is a plain string)
+        3. An empty string if http_header is empty
+    Example:
+        http_header: "Authorization: Bearer abcdefgh"
+        Returns -> "Authorization"
+    """
+    # Split only at the first ":"
+    return http_header.split(":", 1)[0].strip()
+
+
+def get_http_header_value(http_header):
+    """
+    Return the HTTP header value based on the full string entered by the user
+    Args:
+        http_header: a string entered by the user following the -H flag
+    Returns:
+        1. The HTTP header value if http_header is a key-value pair
+        2. None if the http_header is empty or NOT a key-value pair
+    Example:
+        http_header: "Authorization: Bearer abcdefgh"
+        Returns -> "Bearer abcdefgh"
+    """
+    if not http_header or ":" not in http_header:
+        return None
+    # Split only at the first ":"
+    value = http_header.split(":", 1)[1].strip()
+    return value if value else None
+
+
+def remove_sensitive_header_keys(event):
+    """
+    Removes the sensitive headers that the user might add
+    Args:
+        event: The json event which contains the headers
+    Returns:
+        event: The json event without the sensitive headers
+    """
+    from oatlas.config import sensitive_headers
+
+    if not isinstance(event, dict):
+        return event
+
+    if "headers" in event:
+        if not isinstance(event["headers"], dict):
+            return event
+        for key in list(event["headers"].keys()):
+            if key.lower() in sensitive_headers:
+                del event["headers"][key]
+
+    return event
+
+
+def re_address_repeaters_key_name(key_name):
+    return "".join(["['" + _key + "']" for _key in key_name.split("/")[:-1]])
+
+
+def generate_new_sub_steps(sub_steps, data_matrix, arrays):
+    original_sub_steps = copy.deepcopy(sub_steps)
+    steps_array = []
+    for array in data_matrix:
+        array_name_position = 0
+        for array_name in arrays:
+            for sub_step in sub_steps:
+                exec(
+                    "original_sub_steps{key_name} = {matrix_value}".format(
+                        key_name=re_address_repeaters_key_name(array_name),
+                        matrix_value=(
+                            '"' + str(array[array_name_position]) + '"'
+                            if isinstance(array[array_name_position], int)
+                            or isinstance(array[array_name_position], str)
+                            else array[array_name_position]
+                        ),
+                    )
+                )
+            array_name_position += 1
+        steps_array.append(copy.deepcopy(original_sub_steps))
+    return steps_array
+
+
+def find_repeaters(sub_content, root, arrays):
+    if isinstance(sub_content, dict) and "nettacker_fuzzer" not in sub_content:
+        temporary_content = copy.deepcopy(sub_content)
+        original_root = root
+        for key in sub_content:
+            root = original_root
+            root += key + "/"
+            temporary_content[key], _root, arrays = find_repeaters(sub_content[key], root, arrays)
+        sub_content = copy.deepcopy(temporary_content)
+        root = original_root
+    if (not isinstance(sub_content, (bool, int, float))) and (
+        isinstance(sub_content, list) or "nettacker_fuzzer" in sub_content
+    ):
+        arrays[root] = sub_content
+    return (sub_content, root, arrays) if root != "" else arrays
+
+
+class value_to_class:
+    def __init__(self, value):
+        self.value = value
+
+
+def class_to_value(arrays):
+    original_arrays = copy.deepcopy(arrays)
+    array_index = 0
+    for array in arrays:
+        value_index = 0
+        for value in array:
+            if isinstance(value, value_to_class):
+                original_arrays[array_index][value_index] = value.value
+            value_index += 1
+        array_index += 1
+    return original_arrays
+
+
+def generate_and_replace_md5(content):
+    # todo: make it betetr and document it
+    md5_content = content.split("NETTACKER_MD5_GENERATOR_START")[1].split(
+        "NETTACKER_MD5_GENERATOR_STOP"
+    )[0]
+    md5_content_backup = md5_content
+    if isinstance(md5_content, str):
+        md5_content = md5_content.encode()
+    md5_hash = hashlib.md5(md5_content).hexdigest()
+    return content.replace(
+        "NETTACKER_MD5_GENERATOR_START" + md5_content_backup + "NETTACKER_MD5_GENERATOR_STOP",
+        md5_hash,
+    )
+
+
+def generate_target_groups(targets, set_hardware_usage):
+    """
+    Split a list of targets into smaller sublists based on a specified size.
+    """
+    if not targets:
+        return targets
+
+    targets_total = len(targets)
+    split_size = min(set_hardware_usage, targets_total)
+
+    # Calculate the size of each chunk.
+    chunk_size = (targets_total + split_size - 1) // split_size
+
+    return [targets[i : i + chunk_size] for i in range(0, targets_total, chunk_size)]
+
+
+def arrays_to_matrix(arrays):
+    """
+    Generate a Cartesian product of input arrays as a list of lists.
+    """
+    return [list(item) for item in product(*[arrays[array_name] for array_name in arrays])]
+
+
+AVAILABLE_DATA_FUNCTIONS = {
+    "passwords": {"read_from_file"},
+    "paths": {"read_from_file"},
+    "urls": {"read_from_file"},
+}
+
+
+def apply_data_functions(data):
+    def apply_data_functions_new():
+        if item not in AVAILABLE_DATA_FUNCTIONS:
+            return
+
+        for fn_name in data[item]:
+            if fn_name in AVAILABLE_DATA_FUNCTIONS[item]:
+                fn = getattr(importlib.import_module("atlas.tools.nettacker.core.fuzzer"), fn_name)
+                if fn is not None:
+                    original_data[item] = fn(data[item][fn_name])
+
+    def apply_data_functions_old():
+        function_results = {}
+        globals().update(locals())
+        exec(
+            "fuzzer_function = {fuzzer_function}".format(fuzzer_function=data[item]),
+            globals(),
+            function_results,
+        )
+        original_data[item] = function_results["fuzzer_function"]
+
+    original_data = copy.deepcopy(data)
+    for item in data:
+        if isinstance((data[item]), str) and data[item].startswith("fuzzer_function"):
+            apply_data_functions_old()
+        else:
+            apply_data_functions_new()
+
+    return original_data
+
+
+def fuzzer_repeater_perform(arrays):
+    original_arrays = copy.deepcopy(arrays)
+    for array_name in arrays:
+        if "nettacker_fuzzer" not in arrays[array_name]:
+            continue
+
+        data = arrays[array_name]["nettacker_fuzzer"]["data"]
+        data_matrix = arrays_to_matrix(apply_data_functions(data))
+        prefix = arrays[array_name]["nettacker_fuzzer"]["prefix"]
+        input_format = arrays[array_name]["nettacker_fuzzer"]["input_format"]
+        interceptors = copy.deepcopy(arrays[array_name]["nettacker_fuzzer"]["interceptors"])
+        if interceptors:
+            interceptors = interceptors.split(",")
+        suffix = arrays[array_name]["nettacker_fuzzer"]["suffix"]
+        processed_array = []
+
+        for sub_data in data_matrix:
+            formatted_data = {}
+            index_input = 0
+            for value in sub_data:
+                formatted_data[list(data.keys())[index_input]] = value
+                index_input += 1
+            interceptors_function = ""
+            interceptors_function_processed = ""
+
+            if interceptors:
+                interceptors_function += "interceptors_function_processed = "
+                for interceptor in interceptors[::-1]:
+                    interceptors_function += "{interceptor}(".format(interceptor=interceptor)
+                interceptors_function += "input_format.format(**formatted_data)" + str(
+                    ")" * interceptors_function.count("(")
+                )
+                expected_variables = {}
+                globals().update(locals())
+                exec(interceptors_function, globals(), expected_variables)
+                interceptors_function_processed = expected_variables[
+                    "interceptors_function_processed"
+                ]
+            else:
+                interceptors_function_processed = input_format.format(**formatted_data)
+
+            processed_sub_data = interceptors_function_processed
+            if prefix:
+                processed_sub_data = prefix + processed_sub_data
+            if suffix:
+                processed_sub_data = processed_sub_data + suffix
+            processed_array.append(copy.deepcopy(processed_sub_data))
+        original_arrays[array_name] = processed_array
+
+    return original_arrays
+
+
+def expand_module_steps(content):
+    return [expand_protocol(x) for x in copy.deepcopy(content)]
+
+
+def expand_protocol(protocol):
+    protocol["steps"] = [expand_step(x) for x in protocol["steps"]]
+    return protocol
+
+
+def expand_step(step):
+    arrays = fuzzer_repeater_perform(find_repeaters(step, "", {}))
+    if arrays:
+        return generate_new_sub_steps(step, class_to_value(arrays_to_matrix(arrays)), arrays)
+    else:
+        # Minimum 1 step in array
+        return [step]
+
+
+def generate_random_token(length=10):
+    return "".join(random.choice(string.ascii_lowercase) for _ in range(length))

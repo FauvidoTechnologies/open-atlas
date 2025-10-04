@@ -1,0 +1,645 @@
+EmailCheckEngine:
+  common_name: "email-verification"
+  abbreviated_name: "ecE"
+  desc: "This engine is to validate email addresses using multiple techniques"
+  functions:
+    verify_email_address:
+      desc: "Verify if an email address is valid or not"
+      arguments: 
+        arg1: 
+          value: "email"
+          desc: "The email address to be verified"
+      returns:
+        type: bool
+        desc: "True if the email is valid, False otherwise"
+StaticImageExtractionEngine:
+  common_name: "image-metadata"
+  abbreviated_name: "siE"
+  desc: "This engine is to perfom metadata analysis on images including binwalk's firmware extraction"
+  functions:
+    extract_metadata:
+      desc: "Uses exiftool and c2pa library to extract all metadata from an image"
+      arguments:
+        arg1:
+          value: "image_path"
+          desc: "The path to the image file for extraction"
+      returns:
+        type: dict
+        desc: "Dictionary containing basic information and/or EXIF metadata about the image"
+    scan_firmware:
+      desc: "Uses Binwalk (via Rust bindings) to scan for embedded firmware signatures in an image or binary"
+      arguments:
+        arg1:
+          value: "image_path"
+          desc: "Path to the input image or binary file"
+      returns:
+        type: dict
+        desc: "Parsed JSON dictionary containing firmware scan results"
+    extract_firmware:
+      desc: "Extracts a section of binary data (like firmware) from an image file by byte offset"
+      arguments:
+        arg1:
+          value: "input_path"
+          desc: "Path to the binary/image file"
+        arg2:
+          value: "skip"
+          desc: "Number of blocks to skip before reading"
+        arg3:
+          value: "count"
+          desc: "Number of blocks to read"
+        arg4:
+          value: "output_file_name"
+          desc: "Name of the output file to write the extracted data"
+        arg5:
+          value: "block_size"
+          desc: "Block size in bytes (default: 1)"
+      returns:
+        type: dict
+        desc: "Dictionary with extracted byte count and output file path"
+    extract_strings:
+      desc: "Extracts readable ASCII and UTF-16LE strings from a binary or image file"
+      arguments:
+        arg1:
+          value: "input_path"
+          desc: "Path to the binary/image file"
+        arg2:
+          value: "min_length"
+          desc: "Minimum string length to extract (default: 4)"
+      returns:
+        type: list
+        desc: "List of strings found in the file, ordered by file offset"
+RedditKnownEngine:
+  common_name: "reddit-known-username"
+  abbreviated_name: "rkE"
+  desc: "This engine is to query reddit APIs using a known username"
+  functions:
+    fetch_comments:
+      desc: "Fetches a Reddit user's recent comments"
+      arguments:
+        arg1:
+          value: "username"
+          desc: "Reddit username to query"
+        arg2:
+          value: "limit"
+          desc: "Maximum number of comments to fetch (default: 100)"
+      returns:
+        type: list | str | null
+        desc: "List of dictionaries containing 'post_title', 'subreddit', and 'comment' fields if successful. Returns a string message if the username doesn't exist, or null if the response cannot be parsed."
+    fetch_about:
+      desc: "Fetches account details (about information) for a Reddit user"
+      arguments:
+        arg1:
+          value: "username"
+          desc: "Reddit username to query"
+      returns:
+        type: dict
+        desc: "Dictionary of user account details as returned by Reddit's 'about' API endpoint"
+    fetch_user_posts:
+      desc: "Fetches a Reddit user's recent submissions (posts)"
+      arguments:
+        arg1:
+          value: "username"
+          desc: "Reddit username to query"
+      returns:
+        type: list | null
+        desc: "List of dictionaries containing post data if successful or null if the response cannot be parsed."
+RedditUnknownEngine:
+  common_name: "reddit-unknown-username"
+  abbreviated_name: "ruE"
+  desc: "This engine is to query reddit APIs without a known username"
+  functions:
+    search_reddit_posts:
+      desc: "Searches Reddit posts matching a query, optionally restricted to a subreddit"
+      arguments:
+        arg1:
+          value: "query"
+          desc: "Keywords to search for"
+        arg2:
+          value: "subreddit"
+          desc: "Optional subreddit to restrict search to (default: None)"
+        arg3:
+          value: "t"
+          desc: "Time filter for search results ('day', 'week', 'month', 'year', 'all'; default: all)"
+        arg4:
+          value: "limit"
+          desc: "Maximum number of results to return (default: 25)"
+        arg5:
+          value: "sort"
+          desc: "Sorting method ('relevance', 'new', etc.; default: relevance)"
+        arg6:
+          value: "restrict_sr"
+          desc: "Whether to restrict search to the subreddit (default: true)"
+        arg7:
+          value: "type"
+          desc: "Type of result to return (usually 'link'; default: link)"
+      returns:
+        type: list | null
+        desc: "List of dictionaries containing post data if successful, or null if the response cannot be parsed"
+    fetch_post_details:
+      desc: "Fetches details of a specific Reddit post by subreddit and post ID"
+      arguments:
+        arg1:
+          value: "subreddit"
+          desc: "Name of the subreddit where the post is located"
+        arg2:
+          value: "post_id"
+          desc: "ID of the Reddit post to fetch details for"
+      returns:
+        type: dict
+        desc: "Dictionary containing post details as returned by Reddit's post details API"
+DeepScanEngine:
+  common_name: "dl-image-scans"
+  abbreviated_name: "dsE"
+  desc: "This engine is to perform deep learning scans on images including facial attributes and deepfake detections"
+  functions:
+    OCR_analysis:
+      desc: "Performs OCR analysis on an image to extract textual information"
+      arguments:
+        arg1:
+          value: "image_path"
+          desc: "Path to the image file"
+      returns:
+        type: str
+        desc: "Extracted text content from the image"
+    verify_similar_faces:
+      desc: "Verifies whether two images contain the same person using DeepFace"
+      arguments:
+        arg1:
+          value: "image_path_1"
+          desc: "Path to the first image file"
+        arg2:
+          value: "image_path_2"
+          desc: "Path to the second image file"
+      returns:
+        type: dict
+        desc: >
+          Dictionary containing verification results:  
+          - verified (bool or None)  
+          - distance (float or None)  
+          - confidence (float or None)  
+          - is_face (string if face not detected)
+
+    face_attribute_analysis:
+      desc: "Analyzes facial attributes (age, gender, race, emotion) from an image using DeepFace"
+      arguments:
+        arg1:
+          value: "image_path"
+          desc: "Path to the image file"
+      returns:
+        type: list | dict
+        desc: >
+          List of dictionaries with keys: age, gender, race, emotion.  
+          If no face is detected, returns a dict with all values None and is_face explanation.
+InstagramEngine:
+  common_name: "instagram-query"
+  abbreviated_name: "insE"
+  desc: "This engine is to scan through instagram using html parsing and browser automations"
+  functions:
+    fetch_account_information:
+      desc: "Fetches basic account information for a given Instagram username"
+      arguments:
+        arg1:
+          value: "username"
+          desc: "The Instagram username to query"
+      returns:
+        type: dict
+        desc: >
+          Dictionary containing account details including:  
+          - profile_picture_url (str)  
+          - num_followers (int or str with K/M/B suffixes)  
+          - num_following (int or str with K/M/B suffixes)  
+          - num_posts (int)  
+          - all_content (raw meta description content)  
+          Additional keys may include profile picture analysis fields (race, age, gender, emotion).
+    fetch_public_account_posts:
+      desc: "Fetches public posts of an Instagram account using browser automation (Playwright)"
+      arguments:
+        arg1:
+          value: "username"
+          desc: "The Instagram username whose posts are to be scraped"
+      returns:
+        type: list
+        desc: >
+          List of dictionaries containing post data (images, comments, likes,  
+          and optional image analysis results). Maximum of 12 posts per run.
+ImageGeolocationEngine:
+  common_name: "image-geolocation"
+  abbreviated_name: "igE"
+  desc: "This engine consolidates geolocation information from APIs (Picarta) and VertexAI to predict the most accurate location of an image"
+  functions:
+    geolocate_local_image:
+      desc: "Performs geolocation on a locally stored image using the Picarta API"
+      arguments:
+        arg1:
+          value: "image_path"
+          desc: "Path to the local image file"
+        arg2:
+          value: "top_k"
+          desc: "Number of top location matches to return (default 10, max 100)"
+        arg3:
+          value: "country_code"
+          desc: "Optional 2-letter country code (e.g., US, FR, DE). Defaults to worldwide search"
+        arg4:
+          value: "center_latitude"
+          desc: "Optional float latitude for central search point"
+        arg5:
+          value: "center_longitude"
+          desc: "Optional float longitude for central search point"
+        arg6:
+          value: "radius"
+          desc: "Optional search radius in kilometers around center point"
+      returns:
+        type: dict|string
+        desc: "Dictionary of relevant fields (camera_maker, camera_model, topk_predictions_dict) if successful, else error string"
+    geolocate_online_image:
+      desc: "Performs geolocation on an online image (via URL) using the Picarta API"
+      arguments:
+        arg1:
+          value: "image_url"
+          desc: "The URL of the image to geolocate"
+        arg2:
+          value: "top_k"
+          desc: "Number of top location matches to return (default 10, max 100)"
+        arg3:
+          value: "country_code"
+          desc: "Optional 2-letter country code (e.g., US, FR, DE). Defaults to worldwide search"
+        arg4:
+          value: "center_latitude"
+          desc: "Optional float latitude for central search point"
+        arg5:
+          value: "center_longitude"
+          desc: "Optional float longitude for central search point"
+        arg6:
+          value: "radius"
+          desc: "Optional search radius in kilometers around center point"
+      returns:
+        type: dict|string
+        desc: "Dictionary of relevant fields (camera_maker, camera_model, topk_predictions_dict) if successful, else error string"
+    geolocate_using_vertexAI:
+      desc: "Performs geolocation inference using VertexAI with LLM-based reasoning"
+      arguments:
+        arg1:
+          value: "image_path"
+          desc: "Path to the image file to analyze"
+        arg2:
+          value: "prompt"
+          desc: "short stub of information to guide geolocation"
+      returns:
+        type: VertexaiGeolocationResponse|None
+        desc: "Parsed Pydantic response with geolocation info if successful, else None"
+    combined_llm_deeplearning_analysis:
+      desc: "Runs both Picarta deep learning geolocation and VertexAI LLM inference on the same local image and merges results"
+      arguments:
+        arg1:
+          value: "image_path"
+          desc: "Path to the local image file"
+        arg2:
+          value: "top_k"
+          desc: "Number of top location matches to return (default 10, max 100)"
+        arg3:
+          value: "country_code"
+          desc: "Optional 2-letter country code (e.g., US, FR, DE). Defaults to worldwide search"
+        arg4:
+          value: "center_latitude"
+          desc: "Optional float latitude for central search point"
+        arg5:
+          value: "center_longitude"
+          desc: "Optional float longitude for central search point"
+        arg6:
+          value: "radius"
+          desc: "Optional search radius in kilometers around center point"
+      returns:
+        type: dict
+        desc: >
+          Dictionary with two keys:  
+          - picarta: output from `geolocate_local_image`  
+          - vertexai: output from `geolocate_using_vertexAI`
+IPinfoEngine:
+  common_name: "ip-lookups"
+  abbreviated_name: "ipE"
+  desc: "This engine performs IP lookups using free and paid IPinfo APIs"
+  functions:
+    basic_ip_lookup:
+      desc: "Performs a free-tier lookup on an IP address using IPinfo API"
+      arguments:
+        arg1:
+          value: "ipaddress"
+          desc: "The IP address to scan"
+      returns:
+        type: string
+        desc: "Formatted JSON string with free-tier IPinfo data"
+
+    core_api_lookups:
+      desc: "Performs a paid IPinfo Core API lookup on an IP address"
+      arguments:
+        arg1:
+          value: "ipaddress"
+          desc: "The IP address to scan"
+      returns:
+        type: string
+        desc: "Formatted JSON string with detailed Core API IPinfo data"
+
+    core_api_lookups_asn:
+      desc: "Performs a paid IPinfo Core API lookup using an ASN number"
+      arguments:
+        arg1:
+          value: "asn_number"
+          desc: "The Autonomous System Number (ASN) to query"
+      returns:
+        type: string
+        desc: "Formatted JSON string with ASN-related data from Core API"
+PerplexityEngine:
+  common_name: "pplx-search"
+  abbreviated_name: "pplxE"
+  desc: "This engine is used to query Perplexity AI for search, summaries, and image results"
+  functions:
+    search_perplexity_text:
+      desc: "Performs a Perplexity API search for text queries and extracts summary + citations"
+      arguments:
+        arg1:
+          value: "search_request"
+          desc: "The query string to search on Perplexity"
+      returns:
+        type: string | None
+        desc: "Formatted string containing extracted summary and citations, or None if the call fails"
+
+    search_perplexity_images:
+      desc: "Performs a Perplexity API search for images and returns image URLs"
+      arguments:
+        arg1:
+          value: "search_request"
+          desc: "The query string to search on Perplexity (for image results)"
+      returns:
+        type: dict | None
+        desc: "Raw JSON response from Perplexity containing image URLs, or None if the call fails"
+UsernameCheckEngine:
+  common_name: "username-enumeration"
+  abbreviated_name: "ucE"
+  desc: "This engine checks if a given username exists across multiple social media and online platforms using the OSS WhatsMyName dataset used by Sherlock as well"
+  functions:
+    check_usernames:
+      desc: "Scans a given username across multiple websites and returns matches"
+      arguments:
+        arg1:
+          value: "username"
+          desc: "The username string to check across websites"
+      returns:
+        type: dict
+        desc: "Dictionary mapping site names to profile URLs where the username was found. Empty dict if no matches."
+GitHubEngine:
+  common_name: "github-search"
+  abbreviated_name: "ghE"
+  desc: "This engine uses GitHub APIs to fetch user information and repositories"
+  functions:
+    fetch_about:
+      desc: "Fetches GitHub profile details of a user and optionally downloads their profile picture"
+      arguments:
+        arg1:
+          value: "username"
+          desc: "The GitHub username to look up"
+      returns:
+        type: dict
+        desc: "Dictionary containing profile info such as bio, company, blog, location, follower count, created/updated timestamps, and image (downloaded or URL). On error, returns {result: False, reason: str, conclusion: str}."
+    fetch_repos:
+      desc: "Fetches all repositories of a GitHub user along with metadata"
+      arguments:
+        arg1:
+          value: "username"
+          desc: "The GitHub username whose repositories should be fetched"
+      returns:
+        type: dict
+        desc: "Dictionary keyed by repo name with values containing {is_private, is_fork, stargazers_count, created_at, updated_at, language}. On error, returns {result: False, reason: str, conclusion: str}."
+    get_repo_secrets:
+      desc: "Get secret keys from a repository including running through commit history"
+      arguments:
+        arg1:
+          value: repository_names
+          desc: "The GitHub repository URLs which need to be analysed for secrets (ensure that the URL is correct!)"
+        arg2:
+          value: rules_file
+          desc: "The YAML rules configuration file"
+        arg3:
+          value: processes
+          desc: "The number of CPU cores to utilize. If the number of repositories is high, increase this number"
+        arg4:
+          value: verbose
+          desc: "The verbose level. Keep this 0 if verbose logs aren't important (they usually aren't)"
+      returns:
+        type: dict|str
+        desc: "Dictionary mapping repository names to discovered secrets and their metadata. Empty dict if no secrets are found."
+NettackerEngine:
+  common_name: "nettacker-scan"
+  abbreviated_name: "ntE"
+  desc: "This engine uses Nettacker to perform network scanning and vulnerability enumeration."
+  functions:
+    nettacker_run:
+      desc: "Performs network scanning on given targets using selected modules, with support for profiles, credentials, port specifications, threading, and proxy settings."
+      arguments:
+        targets:
+          value: "targets"
+          desc: "List of target hosts/IPs/domains to scan (e.g., ['example.com', '10.0.0.1'])."
+        selected_modules:
+          value: "selected_modules"
+          desc: "List of module names to run for the scan (e.g., ['portscan', 'http_fingerprint'])."
+        targets_list:
+          value: "targets_list"
+          desc: "Path to a file containing targets (one per line)."
+        profiles:
+          value: "profiles"
+          desc: "Comma-separated profile name(s) or path to a profile file for predefined scan settings."
+        excluded_modules:
+          value: "excluded_modules"
+          desc: "Modules to exclude from the scan."
+        excluded_ports:
+          value: "excluded_ports"
+          desc: "Ports or port ranges to exclude from scanning (e.g., ['22', '80-90'])."
+        usernames:
+          value: "usernames"
+          desc: "List of usernames to use for credential-based modules."
+        usernames_list:
+          value: "usernames_list"
+          desc: "Path to a file with usernames (one per line)."
+        passwords:
+          value: "passwords"
+          desc: "List of passwords to use for credential-based modules."
+        passwords_list:
+          value: "passwords_list"
+          desc: "Path to a file with passwords (one per line)."
+        ports:
+          value: "ports"
+          desc: "Ports or port ranges to scan (e.g., ['1-65535','80'])."
+        user_agent:
+          value: "user_agent"
+          desc: "HTTP User-Agent string to use for web requests."
+        timeout:
+          value: "timeout"
+          desc: "Per-request timeout in seconds."
+        time_sleep_between_requests:
+          value: "time_sleep_between_requests"
+          desc: "Delay (seconds) between individual requests to the same target."
+        scan_ip_range:
+          value: "scan_ip_range"
+          desc: "If true, treat targets as IP ranges and expand them."
+        scan_subdomains:
+          value: "scan_subdomains"
+          desc: "If true, enumerate and scan subdomains of supplied domains."
+        skip_service_discovery:
+          value: "skip_service_discovery"
+          desc: "If true, skip performing service discovery (i.e., skip port scanning)."
+        thread_per_host:
+          value: "thread_per_host"
+          desc: "Number of threads to spawn per host."
+        parallel_module_scan:
+          value: "parallel_module_scan"
+          desc: "Number of modules to run in parallel."
+        set_hardware_usage:
+          value: "set_hardware_usage"
+          desc: "Percentage (0-100) to limit resource usage."
+        socks_proxy:
+          value: "socks_proxy"
+          desc: "SOCKS proxy URL (e.g., 'socks5://127.0.0.1:9050')."
+        retries:
+          value: "retries"
+          desc: "Number of retries for transient request failures."
+        ping_before_scan:
+          value: "ping_before_scan"
+          desc: "If true, ping hosts before attempting scans."
+        read_from_file:
+          value: "read_from_file"
+          desc: "Path to an input file containing serialized scan configuration/results to read from."
+        http_header:
+          value: "http_header"
+          desc: "Extra HTTP headers to send with requests (e.g., ['Header: value'])."
+      returns:
+        type: dict
+        desc: "Dictionary containing scan results keyed by target and module with metadata such as discovered vulnerabilities, open ports, service info, and execution timestamps. On error, returns {result: False, reason: str, conclusion: str}."
+HaveIBeenPwnedEngine:
+  common_name: "have-i-been-pwned"
+  abbreviated_name: "HIBP"
+  desc: "This engine queries the Have I Been Pwned (HIBP) API to check if an email address has appeared in known data breaches."
+  functions:
+    check_email_against_breach_data:
+      desc: "Checks if the given email address is found in any known data breach records"
+      arguments:
+        arg1:
+          value: "email"
+          desc: "The email address to check against breach databases"
+      returns:
+        type: string
+        desc: "String containing details of breaches if the email is found. Each entry includes the breach name, domain, date, compromised data types, etc. If no breach is found, returns an empty String. On error, returns the reason"
+ProfessionalEmailFinderEngine:
+  common_name: "professional-email-finder"
+  abbreviated_name: "PEF"
+  desc: "This engine queries Hunter.io’s APIs to discover professional email addresses for domains and individuals. It supports both domain-wide searches and person-specific lookups, returning well-formatted strings with enriched metadata."
+  functions:
+    find_emails_for_domain:
+      desc: "Fetches all available professional emails for a given company domain. Returns details such as email, type, confidence score, name, position, seniority, department, LinkedIn, Twitter, phone, verification status, and sources."
+      arguments:
+        arg1:
+          value: "domain_name"
+          desc: "The company domain name (e.g., 'stripe.com') for which professional emails need to be retrieved."
+      returns:
+        type: string
+        desc: "String containing all discovered professional emails and associated metadata. If no emails are found, returns 'No emails found'. On error, returns None."
+    find_emails_for_person:
+      desc: "Fetches the most likely professional email for a specific person at a given company domain. Returns details such as email, score, domain, company, position, LinkedIn, Twitter, phone, verification status, and sources."
+      arguments:
+        arg1:
+          value: "domain_name"
+          desc: "The company domain name (e.g., 'reddit.com', 'owasp.org')."
+        arg2:
+          value: "first_name"
+          desc: "The first name of the person."
+        arg3:
+          value: "last_name"
+          desc: "The last name of the person."
+      returns:
+        type: string
+        desc: "String containing the professional email and associated metadata if found. If no match is found, returns None. On error, returns the reason."
+GetPagesEngine:
+  common_name: "get-pages"
+  abbreviated_name: "GPE"
+  desc: "This engine performs HTTP GET requests on one or more URLs. It is designed for validating whether URLs exist and retrieving their JSON/text content. It supports both single URL lookups and bulk parallel fetches, returning structured results with status codes and response bodies. This engine is an alternative to browser automation when only raw URL checks are needed."
+  functions:
+    fetch_get_page:
+      desc: "Fetches the contents of a single URL using a GET request. Returns both the HTTP status code and the response text. This is useful for validating whether a given URL is accessible and retrieving its contents (such as JSON or HTML)."
+      arguments:
+        arg1:
+          value: "url"
+          desc: "The full URL to request (e.g., 'https://api.github.com')."
+      returns:
+        type: dict
+        desc: "Dictionary containing the HTTP status code and response text. Example: { 'status': 200, 'text': '...' }. On failure, status is -1 and text contains the error message."
+    fetch_get_pages_bulk:
+      desc: "Performs GET requests on multiple URLs in parallel using asynchronous requests. Returns a dictionary where each URL maps to another dictionary containing its HTTP status code and response text. This allows for fast validation and retrieval of content from many URLs at once."
+      arguments:
+        arg1:
+          value: "urls"
+          desc: "A list of full URLs to request (e.g., https://api.github.com,https://httpbin.org/status/404). Make sure they're comma separated"
+      returns:
+        type: dict
+        desc: "Dictionary mapping each input URL to its result. Example: { 'https://api.github.com': { 'status': 200, 'text': '...' }, 'https://httpbin.org/status/404': { 'status': 404, 'text': 'Not Found' } }. On failure, status is -1 and text contains the error message."
+HyperlinkExtractEngine:
+  common_name: "hyperlink-extract"
+  abbreviated_name: "HLE"
+  desc: "This engine extracts hyperlinks from one or more webpages using Playwright. It is useful for discovering outbound and internal links, contact information (mailto links), and references to social media profiles such as LinkedIn, Twitter, or GitHub. This engine is a lightweight alternative to browser automation for link discovery and can be used as a preliminary scan before deeper analysis."
+  functions:
+    hyperlinks_for_single_url:
+      desc: "Extracts all hyperlinks from a single webpage. This includes standard links, email addresses (mailto:), and links to social/professional platforms. The function is useful when you want to quickly analyze the link structure of one page before deeper processing."
+      arguments:
+        arg1:
+          value: "url"
+          desc: "The full URL of the page from which hyperlinks are to be extracted (e.g., 'https://example.com')."
+      returns:
+        type: list
+        desc: "A list of extracted hyperlinks as strings. Example: ['https://example.com/about', 'mailto:info@example.com', 'https://linkedin.com/in/example']."
+    hyperlinks_for_multiple_urls:
+      desc: "Extracts hyperlinks from multiple webpages and returns them as a dictionary. Each input URL maps to its list of discovered links. This is useful when scanning many sites to collect contact details, social links, or references in bulk."
+      arguments:
+        arg1:
+          value: "urls"
+          desc: "A list of full URLs to process (e.g., ['https://example.com','https://another.com'])."
+      returns:
+        type: dict
+        desc: "Dictionary mapping each input URL to its list of extracted hyperlinks. Example: { 'https://example.com': ['https://example.com/about'], 'https://another.com': ['mailto:hello@another.com','https://twitter.com/another'] }."
+VerifyAIGeneratedImageEngine:
+  common_name: "verify-ai-generated-image"
+  abbreviated_name: "VAI"
+  desc: "This engine analyzes images to determine if they are AI-generated/edited or authentic. It leverages metadata inspection, deepfake detection methods, external verification APIs, and ensemble approaches to provide robust conclusions."
+  functions:
+    metadata_analysis:
+      desc: "Performs metadata-based inspection of an image to detect anomalies. This includes extracting EXIF and C2PA data."
+      arguments:
+        arg1:
+          value: "image_path"
+          desc: "Absolute path to the image file to analyze (e.g., '/home/user/images/test.jpg')."
+      returns:
+        type: dict
+        desc: "Extracted metadata including exif and C2PA data (if found)"
+    deepscan_fake_image_verification:
+      desc: "Runs a deepfake/AI-image detection algorithm on the given image. This function uses advanced computer vision models to detect generative signatures left by GANs or diffusion models. It's not the best though!"
+      arguments:
+        arg1:
+          value: "image_path"
+          desc: "Absolute path to the image file (e.g., '/home/user/images/test.jpg')."
+      returns:
+        type: dict
+        desc: "Verification results with probability scores."
+    isgsenAI:
+      desc: "Uses the external IsgenAI verification service to determine whether an image is AI-generated. This function works well and is more accurate!"
+      arguments:
+        arg1:
+          value: "image_path"
+          desc: "Absolute path to the image file (e.g., '/home/user/images/test.jpg')."
+      returns:
+        type: dict
+        desc: "Response from the IsgenAI API, including classification and confidence. Example: { 'classification': 'AI-generated', 'confidence': 0.87 }."
+    combined_AI_image_verification:
+      desc: "Performs a combined verification by aggregating metadata analysis, deepfake detection, and IsgenAI results into a unified conclusion. This provides the most reliable assessment."
+      arguments:
+        arg1:
+          value: "image_path"
+          desc: "Absolute path to the image file (e.g., '/home/user/images/test.jpg')."
+      returns:
+        type: dict
+        desc: "Aggregated verification result."

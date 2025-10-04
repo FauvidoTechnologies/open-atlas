@@ -1,0 +1,582 @@
+[
+  {
+    "type": "string",
+    "title": "ftp_brute",
+    "description": "FTP Bruteforcer"
+  },
+  {
+    "type": "string",
+    "title": "ftps_brute",
+    "description": "FTPS Bruteforcer"
+  },
+  {
+    "type": "string",
+    "title": "pop3_brute",
+    "description": "POP3 Bruteforcer"
+  },
+  {
+    "type": "string",
+    "title": "pop3_brute",
+    "description": "POP3 SSL Bruteforcer"
+  },
+  {
+    "type": "string",
+    "title": "smb_brute",
+    "description": "SMB Bruteforcer"
+  },
+  {
+    "type": "string",
+    "title": "smtp_brute",
+    "description": "SMTP Bruteforcer"
+  },
+  {
+    "type": "string",
+    "title": "smtps_brute",
+    "description": "SMTPS Bruteforcer"
+  },
+  {
+    "type": "string",
+    "title": "ssh_brute",
+    "description": "SSH Bruteforcer"
+  },
+  {
+    "type": "string",
+    "title": "telnet_brute",
+    "description": "Telnet Bruteforcer"
+  },
+  {
+    "type": "string",
+    "title": "admin_scan",
+    "description": "Admin Directory Finder"
+  },
+  {
+    "type": "string",
+    "title": "adobe_aem_lastpatcheddate_scan",
+    "description": "Adobe Experience Manager (AEM) Last Patched Date Scan"
+  },
+  {
+    "type": "string",
+    "title": "citrix_lastpatcheeddate_scan",
+    "description": "Citrix Netscaler Gateway Last Patched Date Scan"
+  },
+  {
+    "type": "string",
+    "title": "config_file_scan",
+    "description": "Configuration file finder"
+  },
+  {
+    "type": "string",
+    "title": "confluence_version_scan",
+    "description": "Fetch Confluence version from target"
+  },
+  {
+    "type": "string",
+    "title": "crushftp_lastpatcheddate_scan",
+    "description": "CrushFTP Last Patched Date Scan"
+  },
+  {
+    "type": "string",
+    "title": "cups_version_scan",
+    "description": "fetch CUPS version from target to help identify CVE-2024-47176"
+  },
+  {
+    "type": "string",
+    "title": "dir_scan",
+    "description": "Interesting Directory Finder"
+  },
+  {
+    "type": "string",
+    "title": "drupal_module_scan",
+    "description": "fetch drupal version from target"
+  },
+  {
+    "type": "string",
+    "title": "drupal_theme_scan",
+    "description": "fetch drupal version from target"
+  },
+  {
+    "type": "string",
+    "title": "drupal_version_scan",
+    "description": "fetch drupal version from target"
+  },
+  {
+    "type": "string",
+    "title": "http_html_title_scan",
+    "description": "HTTP HTML Title scan - extracts the TITLE tag which can help identify the application running on the server"
+  },
+  {
+    "type": "string",
+    "title": "http_redirect_scan",
+    "description": "HTTP Redirect scan checks if a target website responds with a 3xx status code"
+  },
+  {
+    "type": "string",
+    "title": "status_scan",
+    "description": "HTTP Status scan"
+  },
+  {
+    "type": "string",
+    "title": "icmp_scan",
+    "description": "check if host is alive through ICMP"
+  },
+  {
+    "type": "string",
+    "title": "ivanti_csa_lastpatcheddate_scan",
+    "description": "Ivanti CSA Last Patched Date Scan"
+  },
+  {
+    "type": "string",
+    "title": "ivanti_epmm_lastpatcheddate_scan",
+    "description": "Ivanti EPMM Last Patched Date Scan"
+  },
+  {
+    "type": "string",
+    "title": "ivanti_ics_lastpatcheddate_scan",
+    "description": "Ivanti ICS Last Patched Date Scan"
+  },
+  {
+    "type": "string",
+    "title": "ivanti_vtm_version_scan",
+    "description": "Ivanti vTM Version Scan"
+  },
+  {
+    "type": "string",
+    "title": "joomla_version_scan",
+    "description": "fetch joomla version from target"
+  },
+  {
+    "type": "string",
+    "title": "joomla_version_scan",
+    "description": "fetch joomla version from target"
+  },
+  {
+    "type": "string",
+    "title": "joomla_version_scan",
+    "description": "fetch joomla version from target"
+  },
+  {
+    "type": "string",
+    "title": "moveit_version_scan",
+    "description": "MoveIt version scan - detects and shows Progress MoveIt software and its version"
+  },
+  {
+    "type": "string",
+    "title": "pma_scan",
+    "description": "php my admin finder"
+  },
+  {
+    "type": "string",
+    "title": "",
+    "description": "Find open ports and services"
+  },
+  {
+    "type": "string",
+    "title": "ssl_expiring_certificate_scan",
+    "description": "check if the ssl certificate is expiring soon"
+  },
+  {
+    "type": "string",
+    "title": "subdomain_scan",
+    "description": "Find subdomains using different sources on internet"
+  },
+  {
+    "type": "string",
+    "title": "viewdns_reverse_iplookup_scan",
+    "description": "reverse lookup for target ip"
+  },
+  {
+    "type": "string",
+    "title": "waf_scan",
+    "description": "waf detect"
+  },
+  {
+    "type": "string",
+    "title": "web_technologies_scan",
+    "description": "Detect Web technologies"
+  },
+  {
+    "type": "string",
+    "title": "wordpress_version_scan",
+    "description": "WordPress Version Scan - extracts WP version number from /wp-admin/install.php"
+  },
+  {
+    "type": "string",
+    "title": "wordpress_version_scan",
+    "description": "Directory, Backup finder"
+  },
+  {
+    "type": "string",
+    "title": "wordpress_version_scan",
+    "description": "Directory, Backup finder"
+  },
+  {
+    "type": "string",
+    "title": "wordpress_version_scan",
+    "description": "Directory, Backup finder"
+  },
+  {
+    "type": "string",
+    "title": "accela_cve_2021_34370_vuln",
+    "description": "Accela Civic Platform Cross-Site-Scripting and Open Redirect <= 21.1"
+  },
+  {
+    "type": "string",
+    "title": "adobe_coldfusion_cve_2023_26360_vuln",
+    "description": "CVE-2023-26360 - Unauthenticated deserialization of untrusted data vulnerability in Adobe ColdFusion 2021 Update 5 and earlier as well as ColdFusion 2018 Update 15 and earlier, in order to gain unauthenticated arbitrary file read and remote code execution."
+  },
+  {
+    "type": "string",
+    "title": "apache_cve_2021_41773_vuln",
+    "description": "A flaw was found in a change made to path normalization in Apache HTTP Server 2.4.49. An attacker could use a path traversal attack to map URLs to files outside the expected document root. If files outside of the document root are not protected by \"require all denied\" these requests can succeed. Additionally this flaw could leak the source of interpreted files like CGI scripts. This issue is known to be exploited in the wild. This issue only affects Apache 2.4.49 and not earlier versions."
+  },
+  {
+    "type": "string",
+    "title": "apache_cve_2021_42013_vuln",
+    "description": "A flaw was found in a change made to path normalization in Apache HTTP Server 2.4.49. An attacker could use a path traversal attack to map URLs to files outside the expected document root. If files outside of the document root are not protected by \"require all denied\" these requests can succeed. Additionally this flaw could leak the source of interpreted files like CGI scripts. This issue is known to be exploited in the wild. This issue only affects Apache 2.4.49 and not earlier versions."
+  },
+  {
+    "type": "string",
+    "title": "apache_ofbiz_cve_2024_38856_vuln",
+    "description": "CVE-2024-38856 Apache OFBiz Unauthenticated endpoint could allow execution of screen rendering code"
+  },
+  {
+    "type": "string",
+    "title": "apache_struts_vuln",
+    "description": null
+  },
+  {
+    "type": "string",
+    "title": "aviatrix_cve_2021_40870_vuln",
+    "description": "Aviatrix Controller 6.x before 6.5-1804.1922. Unrestricted upload of a file with a dangerous type is possible, which allows an unauthenticated user to execute arbitrary code via directory traversal."
+  },
+  {
+    "type": "string",
+    "title": "cisco_hyperflex_cve_2021_1497_vuln",
+    "description": "Multiple vulnerabilities in the web-based management interface of Cisco HyperFlex HX could allow an unauthenticated, remote attacker to perform command injection attacks against an affected device."
+  },
+  {
+    "type": "string",
+    "title": "citrix_cve_2019_19781_vuln",
+    "description": "CVE-2019-19781 - Vulnerability in Citrix Application Delivery Controller, Citrix Gateway, and Citrix SD-WAN WANOP appliance"
+  },
+  {
+    "type": "string",
+    "title": "citrix_cve_2023_24488_vuln",
+    "description": "CVE-2023-24488 - XSS Vulnerability in Citrix Application Delivery Controller and Citrix Gateway"
+  },
+  {
+    "type": "string",
+    "title": "citrix_cve_2023_4966_vuln",
+    "description": "CVE-2023-4966 - Retrieve sensitive information such as authentication session cookies in NetScaler ADC and NetScaler Gateway when configured as a Gateway (VPN virtual server, ICA Proxy, CVPN, RDP Proxy)."
+  },
+  {
+    "type": "string",
+    "title": "clickjacking_vuln",
+    "description": "Clickjacking, also known as a \"UI redress attack\", is when an attacker uses multiple transparent or opaque layers to trick a user into clicking on a button"
+  },
+  {
+    "type": "string",
+    "title": "cloudron_cve_2021_40868_vuln",
+    "description": "In Cloudron 6.2, the returnTo parameter on the login page is vulnerable to Reflected XSS."
+  },
+  {
+    "type": "string",
+    "title": "confluence_cve_2023_22515_vuln",
+    "description": "Atlassian has been made aware of an issue reported by a handful of customers where external attackers may have exploited a previously unknown vulnerability in publicly accessible Confluence Data Center and Server instances to create unauthorized Confluence administrator accounts and access Confluence instances."
+  },
+  {
+    "type": "string",
+    "title": "confluence_cve_2023_22527_vuln",
+    "description": "A template injection vulnerability on out-of-date versions of Confluence Data Center and Server allows an unauthenticated attacker to achieve RCE on an affected version."
+  },
+  {
+    "type": "string",
+    "title": "content_security_policy_vuln",
+    "description": "Content-Security-Policy is the name of a HTTP response header that modern browsers use to enhance the security of the document (or web page). The Content-Security-Policy header allows you to restrict how resources such as JavaScript, CSS, or pretty much anything that the browser loads."
+  },
+  {
+    "type": "string",
+    "title": "content_type_options_vuln",
+    "description": null
+  },
+  {
+    "type": "string",
+    "title": "crushftp_cve_2025_31161_vuln",
+    "description": "This module checks for a critical improper authentication vulnerability in CrushFTP (CVE-2025-31161). The vulnerability allows unauthenticated users to access sensitive files and execute arbitrary commands, leading to potential data exposure and system compromise.\n"
+  },
+  {
+    "type": "string",
+    "title": "cyberoam_netgenie_cve_2021_38702_vuln",
+    "description": "Cyberoam NetGenie C0101B1-20141120-NG11VO devices through 2021-08-14 allow for reflected Cross Site Scripting via the 'u' parameter of ft.php."
+  },
+  {
+    "type": "string",
+    "title": "exponent_cms_cve_2021_38751_vuln",
+    "description": "A HTTP Host header attack exists in ExponentCMS 2.6 and below in /exponent_constants.php. A modified HTTP header can change links on the webpage to an arbitrary value, leading to a possible attack vector for MITM."
+  },
+  {
+    "type": "string",
+    "title": "f5_cve_2020_5902_vuln",
+    "description": null
+  },
+  {
+    "type": "string",
+    "title": "forgerock_am_cve_2021_35464_vuln",
+    "description": "ForgeRock AM server before 7.0 has a Java deserialization vulnerability in the jato.pageSession parameter on multiple pages. The exploitation does not require authentication, and remote code execution can be triggered by sending a single crafted /ccversion/* request to the server. The vulnerability exists due to the usage of Sun ONE Application Framework (JATO) found in versions of Java 8 or earlier"
+  },
+  {
+    "type": "string",
+    "title": "galera_webtemp_cve_2021_40960_vuln",
+    "description": "Galera WebTemplate 1.0 is affected by a directory traversal vulnerability that could reveal information from /etc/passwd and /etc/shadow."
+  },
+  {
+    "type": "string",
+    "title": "grafana_cve_2021_43798_vuln",
+    "description": "Grafana unpatched 0 Day LFI is now being actively exploited, it affects only Grafana 8.0+, Vulnerable companies should revoke the secrets they store at their /etc/grafana/grafana.ini as there is no official fix in the meantime."
+  },
+  {
+    "type": "string",
+    "title": "graphql_vuln",
+    "description": null
+  },
+  {
+    "type": "string",
+    "title": "gurock_testrail_cve_2021_40875_vuln",
+    "description": "Improper Access Control in Gurock TestRail versions < 7.2.0.3014 resulted in sensitive information exposure. A threat actor can access the /files.md5 file on the client side of a Gurock TestRail application, disclosing a full list of application files and the corresponding file paths. The corresponding file paths can be tested, and in some cases, result in the disclosure of hardcoded credentials, API keys, or other sensitive data."
+  },
+  {
+    "type": "string",
+    "title": "hoteldruid_cve_2021_37833_vuln",
+    "description": "Reflected cross-site scripting (XSS) vulnerability exists in multiple pages in version 3.0.2 of the Hotel Druid application that allows for arbitrary execution of JavaScript commands."
+  },
+  {
+    "type": "string",
+    "title": "http_cookie_vuln",
+    "description": "This module check for Set-Cookie header best practices."
+  },
+  {
+    "type": "string",
+    "title": "http_cors_vuln",
+    "description": null
+  },
+  {
+    "type": "string",
+    "title": "http_options_enabled_vuln",
+    "description": null
+  },
+  {
+    "type": "string",
+    "title": "ivanti_epmm_cve_2023_35082_vuln",
+    "description": "CVE-2023-35082 is an authentication bypass in Ivanti Endpoint Manager Mobile (EPMM) and MobileIron Core"
+  },
+  {
+    "type": "string",
+    "title": "ivanti_ics_cve_2023_46805_vuln",
+    "description": "CVE-2023-46805 is an authentication bypass that is usually chained with CVE-2024-21887 to perform remote code execution on Ivanti ICS 9.x, 22.x. This module checks whether the mitigations have been applied for CVE-2023-46805."
+  },
+  {
+    "type": "string",
+    "title": "justwriting_cve_2021_41878_vuln",
+    "description": "A reflected cross-site scripting (XSS) vulnerability exists in the i-Panel Administration System Version 2.0 that enables a remote attacker to execute arbitrary JavaScript code in the browser-based web console."
+  },
+  {
+    "type": "string",
+    "title": "log4j_cve_2021_44228_vuln",
+    "description": "Log4J Remote Code Execution"
+  },
+  {
+    "type": "string",
+    "title": "maxsite_cms_cve_2021_35265_vuln",
+    "description": "Reflected cross-site scripting (XSS) vulnerability in MaxSite CMS before V106 via product/page/* allows remote attackers to inject arbitrary web script to a page."
+  },
+  {
+    "type": "string",
+    "title": "msexchange_cve_2021_26855_vuln",
+    "description": null
+  },
+  {
+    "type": "string",
+    "title": "msexchange_cve_2021_34473_vuln",
+    "description": "Microsoft Exchange Server Remote Code Execution Vulnerability This CVE ID is unique from CVE-2021-31196, CVE-2021-31206."
+  },
+  {
+    "type": "string",
+    "title": "novnc_cve_2021_3654_vuln",
+    "description": "A user-controlled input redirects noVNC users to an external website."
+  },
+  {
+    "type": "string",
+    "title": "omigod_cve_2021_38647_vuln",
+    "description": "Open Management Infrastructure Remote Code Execution Vulnerability"
+  },
+  {
+    "type": "string",
+    "title": "paloalto_globalprotect_cve_2025_0133_vuln",
+    "description": "CVE-2025-0133 reflected cross-site scripting (XSS) vulnerability in the GlobalProtect gateway and portal features of Palo Alto Networks PAN-OS software enables execution of malicious JavaScript.\n"
+  },
+  {
+    "type": "string",
+    "title": "paloalto_panos_cve_2025_0108_vuln",
+    "description": "CVE-2025-0108 is an authentication bypass in the Palo Alto Networks PAN-OS software, which enables an unauthenticated attacker with network access to the management web interface to bypass the authentication"
+  },
+  {
+    "type": "string",
+    "title": "payara_webtemp_cve_2021_41381_vuln",
+    "description": "Payara Micro Community 5.2021.6 and below allows Directory Traversal"
+  },
+  {
+    "type": "string",
+    "title": "phpinfo_cve_2021_37704_vuln",
+    "description": "phpinfo() exposure in unprotected composer vendor folder via phpfastcache/phpfastcache."
+  },
+  {
+    "type": "string",
+    "title": "placeos_sql_cve_2021_41826_vuln",
+    "description": "PlaceOS Authentication Service before 1.29.10.0 allows app/controllers/auth/sessions_controller.rb open redirect"
+  },
+  {
+    "type": "string",
+    "title": "prestashop_cve_2021_37538_vuln",
+    "description": "PrestaShop SmartBlog by SmartDataSoft < 4.0.6 is vulnerable to a SQL injection in the blog archive functionality."
+  },
+  {
+    "type": "string",
+    "title": "puneethreddyhc_sql_cve_2021_41648_vuln",
+    "description": "An un-authenticated SQL Injection exists in PuneethReddyHC online-shopping-system-advanced through the /action.php prId parameter. Using a post request does not sanitize the user input."
+  },
+  {
+    "type": "string",
+    "title": "puneethreddyhc_sql_cve_2021_41649_vuln",
+    "description": "An un-authenticated SQL Injection exists in PuneethReddyHC online-shopping-system-advanced through the /homeaction.php cat_id parameter. Using a post request does not sanitize the user input."
+  },
+  {
+    "type": "string",
+    "title": "qsan_storage_xss_cve_2021_37216_vuln",
+    "description": "QSAN Storage Manager header page parameters does not filter special characters. Remote attackers can inject JavaScript without logging in and launch reflected XSS attacks to access and modify specific data."
+  },
+  {
+    "type": "string",
+    "title": "server_version_vuln",
+    "description": null
+  },
+  {
+    "type": "string",
+    "title": "sonicwall_sslvpn_cve_2024_53704_vuln",
+    "description": "CVE-2024-53704 Is an Improper Authentication vulnerability in the SonicWALL SSLVPN authentication mechanism which allows a remote attacker to bypass authentication."
+  },
+  {
+    "type": "string",
+    "title": "ssl_certificate_weak_signature_vuln",
+    "description": "check if there are any ssl_certificate vulnerabilities present"
+  },
+  {
+    "type": "string",
+    "title": "ssl_expired_certificate_vuln",
+    "description": "check if there are any ssl_certificate vulnerabilities present"
+  },
+  {
+    "type": "string",
+    "title": "ssl_self_signed_certificate_vuln",
+    "description": "check if the ssl certificate is self-signed"
+  },
+  {
+    "type": "string",
+    "title": "ssl_weak_cipher_vuln",
+    "description": "check if ssl version is unsafe or uses any bad ciphers."
+  },
+  {
+    "type": "string",
+    "title": "ssl_weak_version_vuln",
+    "description": "check if ssl version is unsafe or uses any bad ciphers."
+  },
+  {
+    "type": "string",
+    "title": "strict_transport_security_vuln",
+    "description": "The HTTP Strict Transport Security (Strict-Transport-Security) header informs the browser that it should never load a site using HTTP and should automatically convert all attempts to access the site using HTTP to HTTPS requests instead."
+  },
+  {
+    "type": "string",
+    "title": "subdomain_takeover_vuln",
+    "description": "let us assume that example.com is the target and that the team running example.com have a bug bounty programme. While enumerating all of the subdomains belonging to example.com — a process that we will explore later — a hacker stumbles across subdomain.example.com, a subdomain pointing to GitHub pages. We can determine this by reviewing the subdomain's DNS records; in this example, subdomain.example.com has multiple A records pointing to GitHub's dedicated IP addresses for custom pages."
+  },
+  {
+    "type": "string",
+    "title": "teamcity_cve_2024_27198_vuln",
+    "description": "In JetBrains TeamCity before 2023.11.4 authentication bypass allowing to perform admin actions was possible"
+  },
+  {
+    "type": "string",
+    "title": "tieline_cve_2021_35336_vuln",
+    "description": "Finding the Tieline Admin Panels with default credentials."
+  },
+  {
+    "type": "string",
+    "title": "tjws_cve_2021_37573_vuln",
+    "description": "A reflected cross-site scripting (XSS) vulnerability in the web server Tiny Java Web Server and Servlet Container (TJWS) <=1.115 allows an adversary to inject malicious code on the server's 404 Page not Found error page."
+  },
+  {
+    "type": "string",
+    "title": "vbulletin_cve_2019_16759_vuln",
+    "description": null
+  },
+  {
+    "type": "string",
+    "title": "CVE_2021_39320_vuln",
+    "description": "Sensitive Information Leakage - The Gutenberg Template Library & Redux Framework plugin <= 4.2.11 for WordPress"
+  },
+  {
+    "type": "string",
+    "title": "wp_plugin_cve_2021_39316_vuln",
+    "description": "The Zoomsounds plugin <= 6.45 for WordPress allows arbitrary files, including sensitive configuration files such as wp-config.php, to be downloaded via the `dzsap_download` action using directory traversal in the `link` parameter."
+  },
+  {
+    "type": "string",
+    "title": "wp_plugin_cve_2021_39320_vuln",
+    "description": "The underConstruction plugin <= 1.18 for WordPress echoes out the raw value of `$GLOBALS['PHP_SELF']` in the ucOptions.php file. On certain configurations including Apache+modPHP, this makes it possible to use it to perform a reflected Cross-Site Scripting attack by injecting malicious code in the request path."
+  },
+  {
+    "type": "string",
+    "title": "wp_plugin_cve_2023_47668_vuln",
+    "description": "The Membership Plugin Restrict Content plugin for WordPress is vulnerable to Sensitive Information Exposure in all versions up to, and including, 3.2.7 via the legacy log file. This makes it possible for unauthenticated attackers to extract sensitive data including debug information."
+  },
+  {
+    "type": "string",
+    "title": "wp_plugin_cve_2023_6875_vuln",
+    "description": "POST SMTP Mailer – Email log, Delivery Failure Notifications and Best Mail SMTP for WordPress <= 2.8.7 – Unauthenticated Stored Cross-Site Scripting via device"
+  },
+  {
+    "type": "string",
+    "title": "wp_xmlrpc_bruteforce_vuln",
+    "description": null
+  },
+  {
+    "type": "string",
+    "title": "wp_xmlrpc_dos_vuln",
+    "description": null
+  },
+  {
+    "type": "string",
+    "title": "wp_xmlrpc_pingback_vuln",
+    "description": null
+  },
+  {
+    "type": "string",
+    "title": "x_powered_by_vuln",
+    "description": null
+  },
+  {
+    "type": "string",
+    "title": "x_xss_protection_vuln",
+    "description": null
+  },
+  {
+    "type": "string",
+    "title": "xdebug_rce_vuln",
+    "description": null
+  },
+  {
+    "type": "string",
+    "title": "zoho_cve_2021_40539_vuln",
+    "description": "Zoho ManageEngine ADSelfService Plus version 6113 and prior is vulnerable to REST API authentication bypass with resultant remote code execution."
+  }
+]

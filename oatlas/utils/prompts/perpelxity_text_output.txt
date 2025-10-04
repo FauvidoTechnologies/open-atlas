@@ -1,0 +1,7 @@
+The following links were referred to:
+
+{citations}
+
+The summary for the search is given below:
+
+{summary}

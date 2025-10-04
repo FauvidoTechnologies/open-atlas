@@ -1,0 +1,20 @@
+{% for issue in issues -%}
+{{ issue.path }}
+{{ "%-6s" % issue.rule.severity }}  {{ issue.rule.message }}
+{% if issue.commit -%}
+Branch  {{ issue.branch }}
+Message {{ issue.message.splitlines()[0] }}
+Author  {{ issue.author }}
+Commit  {{ issue.commit }}
+{% endif -%}
+{% set fmt = "%%%ds" % issue.line_end | string | length -%}
+{% for number, line in issue.context.items() -%}
+{% if number == issue.line -%}
+    {% set line = line | replace(issue.secret, issue.secret) -%}
+{% endif -%}
+{{ fmt % (number) }}  {{ line }}
+{% endfor -%}
+{% if not loop.last -%}
+{{ "~" * 80 }}
+{% endif -%}
+{% endfor -%}
