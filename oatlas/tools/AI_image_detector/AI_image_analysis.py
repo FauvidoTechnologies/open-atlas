@@ -1,3 +1,4 @@
+import asyncio
 import os
 from typing import Dict, List, Union
 
@@ -17,6 +18,7 @@ except Exception as e:
 
 from oatlas.config import UserAgents, Config
 from oatlas.tools import StaticImageExtractionEngine
+from oatlas.tools.AI_image_detector.utils import upload_via_playwright
 
 
 class VerifyAIGeneratedImageEngine:
@@ -100,24 +102,15 @@ class VerifyAIGeneratedImageEngine:
     @staticmethod
     def isgsenAI(image_path: str) -> Union[Dict[str, str], None]:
         """
-        Unofficially uses the `isgen.ai` to authenticate using ready-made JWT tokens and uses an older
-        authentication JWT. This exploits the fact that they use the same JWT token as their API key and it has
-        an expiry of 10 years (the JWT used in the authentication might fail but API will work!)
+        We don't need any session cookies if we do this using playwright. I have the script written inside utils directory.
+        There is only one caveat, we'll have to run this with headless=False because for this to work we probably need the
+        javascript to render.
 
-        Right now its using a hardcoded JWT which will probably expire in the future and we'll get issued a new one,
-        so we urgently need the above below planning thing.
+        Its however much safer than asking people to login to their service for which I will have to ask for their creds
+        which I don't want to do. So, we're gonna let this one be.
 
-        Future updates:
-                This function will automatically fetch a new bearer token. This is requred because the server kills the session
-                ever so often and issues a new authorisation token to us (note that the API key remains the same)
-
-        How it works?
-
-        - We mimic the entire browser interaction with the website by first sending out an OPTIONS request
-        - All requests are sent with maximum header fields to minimize drop chances (though from what I am seeing
-                they aren't doing much about that)
-        - After the options request, a post request is sent which contains the authorisation and the API key along
-                with the actual image as bytes. The URL endpoints are taken from config, however they aren't to be tampered with!
+        If the user doesn't have playwright installed for some reason, then we default back to the old code. In this case,
+        they will have to find and setup the keys themselves.
 
         Args:
                 image_path: Path to the image which needs to be scanned for AI interference
@@ -126,57 +119,74 @@ class VerifyAIGeneratedImageEngine:
                 100% AI or 100% human, nothing in between which is right!)
         """
 
-        url = Config.API.isgen.endpoint_url
+        playwright_output = asyncio.run(upload_via_playwright(image_path))
 
-        headers = {
-            "Accept": "*/*",
-            "Access-Control-Request-Method": "POST",
-            "Access-Control-Request-Headers": "apikey,authorization,x-client-info",
-            "Origin": Config.API.isgen.base_url,
-            "User-Agent": UserAgents.common_linux,
-            "Sec-Fetch-Mode": "cors",
-            "Sec-Fetch-Site": "same-site",
-            "Sec-Fetch-Dest": "empty",
-            "Referer": Config.API.isgen.base_url,
-            "Accept-Encoding": "gzip, deflate, br",
-            "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
-        }
+        if playwright_output is None:
+            # This means playwright hasn't been installed in the system and we can default back to the old code
+            url = Config.API.isgen.endpoint_url
 
-        response = requests.options(url, headers=headers)
+            headers = {
+                "Accept": "*/*",
+                "Access-Control-Request-Method": "POST",
+                "Access-Control-Request-Headers": "apikey,authorization,x-client-info",
+                "Origin": Config.API.isgen.base_url,
+                "User-Agent": UserAgents.common_linux,
+                "Sec-Fetch-Mode": "cors",
+                "Sec-Fetch-Site": "same-site",
+                "Sec-Fetch-Dest": "empty",
+                "Referer": Config.API.isgen.base_url,
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+            }
 
-        """
-		The bearer token contains some PPI and its not going to last always (like the API key will)
-		So we'll have to figure out a way to OBTAIN the bearer token from the browser session
+            response = requests.options(url, headers=headers)
 
-		We'll let the user know that if they don't have these keys in their env, its okay cause we're gonna
-		dynamically fetch these
-		"""
-        headers = {
-            "Authorization": f"Bearer {os.getenv('isgen_bearer')}",
-            "Apikey": Config.API.isgen.api_key,  # Similarly we'll need a way to get this for the user by default
-            "User-Agent": UserAgents.common_linux,
-            "Accept-Language": "en-GB,en;q=0.9",
-            "Origin": Config.API.isgen.base_url,
-            "Referer": Config.API.isgen.base_url,
-        }
+            """
+            The bearer token contains some PPI and its not going to last always (unlike the API key). To obtain the API
+            key and the bearer token, follow these steps:
 
-        filename = os.path.basename(image_path)
+            1. head over to https://isgen.ai/ai-image-detector
+            2. Login (I am not sure why this helps but you get a different bearer token when you do login vs. when you don't)
+               And whenever I didn't login, the API-key was the same as the bearer token. But using them didn't work! I had to
+               use the `logged in` bearer key so I am suspecting firebase's involvement in this.
+            3. Upload an image (any)
+            4. Open the inspect tool to the networks tab
+            5. Click the upload button and listen for requests, specially to `https://api.isgen.ai/functions/v1/detect-image`
+               This will show up as the name `detect-image`.
+            6. You will find your bearer key and the API-key in the request headers.
 
-        files = {"image": (filename, open(image_path, "rb"), "image/png")}
+            Note: The bearer token will not last long. So, you'll have to generate a fresh one for every session
+                  if you don't install playwright!
+            """
 
-        response = requests.post(url, headers=headers, files=files)
-        # print(response.status_code, response.text, response.headers, response.content)
+            headers = {
+                "Authorization": f"Bearer {os.getenv('isgen_bearer')}",
+                "Apikey": Config.API.isgen.api_key,  # Similarly we'll need a way to get this for the user by default
+                "User-Agent": UserAgents.common_linux,
+                "Accept-Language": "en-GB,en;q=0.9",
+                "Origin": Config.API.isgen.base_url,
+                "Referer": Config.API.isgen.base_url,
+            }
 
-        if response.status_code == 401:
-            log.error(
-                "Atlas is using an expired/invalid JWT. It couldn't get the JWT automatically. Please provide one in the enviornment"
-            )
-            return None
+            filename = os.path.basename(image_path)
 
-        return {
-            "status_code": response.status_code,
-            "decision": response.text,
-        }
+            files = {"image": (filename, open(image_path, "rb"), "image/png")}
+
+            response = requests.post(url, headers=headers, files=files)
+            # print(response.status_code, response.text, response.headers, response.content)
+
+            if response.status_code == 401:
+                log.error(
+                    "Atlas is using an expired/invalid JWT. Please provide one in the enviornment"
+                )
+                return None
+
+            return {
+                "status_code": response.status_code,
+                "decision": response.text,
+            }
+
+        return playwright_output  # If this is not none then it will be the decision
 
     @staticmethod
     def combined_AI_image_verification(image_path: str) -> Dict[str, Dict[str, Union[str, dict]]]:

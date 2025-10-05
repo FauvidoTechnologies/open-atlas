@@ -294,10 +294,13 @@ class Hunter:
     person_domain_email = "https://api.hunter.io/v2/email-finder?domain={domain_name}&first_name={person_first_name}&last_name={person_last_name}&api_key={hunter_api_key}"
 
 
-class IsGen:
+class IsGen(ConfigBase):
     base_url = "https://isgen.ai"
+    endpoint_url = (
+        "https://api.isgen.ai/functions/v1/detect-image"  # For the API, we aren't using this
+    )
+    image_detection_url = "https://isgen.ai/ai-image-detector"
     api_key = os.getenv("isgen_api_key")  # This is a common JWT token -> can be found easily
-    endpoint_url = "https://api.isgen.ai/functions/v1/detect-image"
 
 
 class UserAgents:
