@@ -1,14 +1,15 @@
 # OAtlas
 
-`OAtlas` is an OSINT tool with 35+ functions to aid your investigations. It is the opensourced version of `Atlas` (hence open-atlas). `oatlas` can perform manual tool calling only which makes it very useful for industry experts who know what they're doing.
+**OAtlas** is an OSINT tool with 35+ functions to aid investigations. It is the open-source version of `Atlas` (hence "Open-Atlas"). `OAtlas` is designed for manual tool execution, making it ideal for industry experts who know exactly what they want to do.
 
-To know more about `atlas` on which this is based, refer to the [atlas](#atlas) section in the end.
+For more information about [Atlas](#atlas), refer to the section at the end.
 
-Also, if you want to use some APIs and can't figure out a way to get them, contact me at the email below. I will get you the keys!
+If you need help obtaining API keys for certain functions, contact me at the email provided below. I can provide you with the necessary credentials.
+
 
 ## Installation
 
-Installing `oatlas` is easy. Its written purely in python with some rust bindings for binwalk. Atlas will install all the necessary **external** dependencies by itself.
+`OAtlas` is written in Python, with some Rust bindings for binwalk. The tool will automatically install all required external dependencies.
 
 > Clone the repo
 
@@ -22,6 +23,7 @@ cd open-atlas/
 ```sh
 pip install poetry
 ```
+
 > Install all python dependencies using poetry
 
 ```sh
@@ -31,29 +33,54 @@ make maturin-develop # If you wish to run binwalk
 
 And you're golden! For oatlas usage, refer the [usage](#usage) section.
 
+> Note that `oatlas` will work only on linux and darwin systems for now. It hasn't been tested on freebsd or windows or others yet.
+
 ## Usage
 
-You will need the following API keys for all the functions to be available (set them in the `.env.private` file):
+Some functions require API keys. Place them in the `.env.private` file:
 
 ```
 project_id=None
 ip_info_token=None
 perplexity_default_key=None
 picarta_api_key=None
-hibp-api-key=None
+hibp_api_key=None
 hunter_api_key=None
 isgen_api_key=None
 isgen_bearer=None
 ```
 
-> NOTE: All these are optional. You can use the functions which don't require them freely.
+> NOTE: All API keys are optional. Functions that don’t require them will work without issue.
 
-- The `project_id` is for a VertexAI project under which you have sufficient credits. We're slowly working towards an OpenAI port as well for all the functions that are currently using VertexAI.
-- You will need a perplexity key for basic searches.
-- A [hunter](https://hunter.io/) api key (you can use the free-tier ones or paid as per your choice) if you wish to use reverse-email lookups
-- HIBP for HaveIBeenPwned searches
-- [isgen](https://isgen.ai) is an AI image detection service. It can tell if images were altered/modified by the use of AI tools. We're working on support for getting these keys automatically through browser sessions (it looks like its possible!).
-(You can choose to login and get these credentials by checkout out your POST request to the `/functions/v1/detect-image` endpoint, try it out its fun)
+
+- `project_id` – For VertexAI projects (We're gradually adding OpenAI support for these functions).
+- `perplexity_default_key` – Required for search-based functions. You can get free ones at [perplexity's website](https://www.perplexity.ai/help-center/en/articles/10352995-api-settings).
+- `hunter_api_key` – Required for reverse-email lookups using [Hunter](https://hunter.io). Free-tier keys are sufficient.
+- `hibp_api_key` – Required for `HaveIBeenPwned` searches, this only has paid subscriptions sadly!
+- `isgen_api_key` & `isgen_bearer` – For AI image detection using [isgen](https://isgen.ai).
+
+
+#### Finding isgen API and auth keys
+
+> The bearer token contains some PII and expires quickly. To obtain the API key and bearer token:
+
+1. Go to https://isgen.ai/ai-image-detector.
+2. Login (bearer tokens differ for logged-in vs. logged-out users). For more information, read [this document](./docs/isgen_mystery.md) and see if you can help!
+3. Upload any image.
+4. Open your browser's Inspect tool → `Network` tab.
+5. Click the Upload button and observe requests, particularly to:
+```
+	https://api.isgen.ai/functions/v1/detect-image
+```
+6. You will see the bearer token and API key in the request headers.
+
+> Note: The bearer token is temporary. You may need to generate a fresh one for each session.
+
+> [!TIP]
+> The recommended approach to this is to let OAtlas install playwright browsers during the start and run AI image detections using that
+
+
+#### Listing functions
 
 Below is an example to show all the functions supported for `oatlas`:
 
