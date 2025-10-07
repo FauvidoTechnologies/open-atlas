@@ -1,11 +1,12 @@
 # OAtlas
 
-**OAtlas** is an OSINT tool with 35+ functions to aid investigations. It is the open-source version of `Atlas` (hence "Open-Atlas"). `OAtlas` is designed for manual tool execution, making it ideal for industry experts who know exactly what they want to do.
+**OAtlas** is an OSINT tool with 35+ functions to aid investigations. Imagine **reverse email/username lookups**, **GitHub secrets extraction**, **reddit/instagram/twitter information extraction**, **IP lookups**, **geolocation**, **image metadata and exif extraction**, **AI generated/tweaked image checker** etc. all combined into one tool. 
 
-For more information about [Atlas](#atlas), refer to the section at the end.
+`OAtlas` is designed for manual tool execution, making it ideal for industry experts who know exactly what they want to do. It also has a `plug-and-play` architecture which makes adding tools extremely easy. (refer to the `docs/` for more information on this)
+
+It is a port of `Atlas` which is an upcoming fully automated OSINT tool. For more information about [Atlas](#atlas), refer to the section at the end.
 
 If you need help obtaining API keys for certain functions, contact me at the email provided below. I can provide you with the necessary credentials.
-
 
 ## Installation
 
