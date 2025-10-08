@@ -27,7 +27,7 @@ class GeneralAgent(ArgParser):
         Takes an additional use_openai parameter to specify which LLM to use.
         """
         super().__init__()
-        self.temperature = Config.settings.brain_temperature
+        self.temperature = 0
 
         # VertexAI-specific configurations
         self.project_id = os.getenv(Config.settings.project_id)

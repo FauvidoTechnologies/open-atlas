@@ -1,7 +1,6 @@
 import base64
 import json
 import os
-from pathlib import Path
 from typing import Dict, Union
 
 import magic
@@ -65,32 +64,6 @@ def analyse_picarta_response(response: Dict) -> Dict:
     }
 
 
-def fix_absolute_path(path: str) -> str:
-    """
-    Normalize a path for the geolocation engine.
-
-    - If `path` is already absolute, it is returned unchanged.
-    - If `path` is relative or just a filename, the basename (filename only)
-      is extracted and joined with the scenic images directory.
-
-    Args:
-        path: The path that the AI tells us to use.
-
-    Returns:
-        abs_path: The absolute path that the engine should use for geolocation.
-    """
-    path_obj = Path(path)
-
-    # If already absolute, return as string, as will probably be the case for user defined images
-    if path_obj.is_absolute():
-        return str(path_obj)
-
-    # Always take just the filename part
-    filename = path_obj.name
-    abs_path_parent = Config.path.image_file_dir / "scenic"
-    return str(abs_path_parent / filename)
-
-
 class ImageGeolocationEngine:
     """
     The image geolocation engine consolidates geolocation information from various APIs and outputs the most accurate location for the image
@@ -127,8 +100,6 @@ class ImageGeolocationEngine:
         headers = {
             "Content-Type": "application/json"
         }  # Works well without a User-Agent explicitly there
-
-        image_path = fix_absolute_path(image_path)
 
         with open(image_path, "rb") as image_file:
             image = base64.b64encode(image_file.read()).decode("utf-8")
@@ -224,7 +195,6 @@ class ImageGeolocationEngine:
         Returns:
             A parsed pydantic response or None depending on if it succeeded or not
         """
-        image_path = fix_absolute_path(image_path)
 
         mime_type = magic.from_file(image_path, mime=True)
         if mime_type is None:
