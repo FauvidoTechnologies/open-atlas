@@ -229,3 +229,18 @@ def download_image_from_url(image_url: str, filename: str) -> bool:
         return True
     else:  # Something went wrong
         return False
+
+
+def build_openai_image_part(image_path: str, mime_type: str) -> dict:
+    """
+    Converts an image into OpenAI's multimodal message part format. This is to mirror
+    the VertexAI approach for OpenAI models while entering an image data, used in the
+    geolocation engine
+    """
+    with open(image_path, "rb") as f:
+        image_bytes = f.read()
+    import base64
+
+    encoded = base64.b64encode(image_bytes).decode("utf-8")
+
+    return {"type": "image_url", "image_url": {"url": f"data:{mime_type};base64,{encoded}"}}

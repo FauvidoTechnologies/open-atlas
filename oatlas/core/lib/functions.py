@@ -1,13 +1,11 @@
-from google.genai.types import FunctionDeclaration
-
 from oatlas.config import Config
 from oatlas.utils.common import nettacker_module_names
 from oatlas.utils.tool_descriptions import FunctionTools
 
-known_reddit_function_1 = FunctionDeclaration(
-    name="fetch_comments",
-    description=FunctionTools.KnownRedditFunctions.fetch_comments,
-    parameters={
+known_reddit_function_1 = {
+    "name": "fetch_comments",
+    "description": FunctionTools.KnownRedditFunctions.fetch_comments,
+    "parameters": {
         "type": "object",
         "properties": {
             "username": {"type": "string", "description": "The reddit username"},
@@ -19,12 +17,12 @@ known_reddit_function_1 = FunctionDeclaration(
         },
         "required": ["username"],
     },
-)
+}
 
-known_reddit_function_2 = FunctionDeclaration(
-    name="fetch_about",
-    description=FunctionTools.KnownRedditFunctions.fetch_about,
-    parameters={
+known_reddit_function_2 = {
+    "name": "fetch_about",
+    "description": FunctionTools.KnownRedditFunctions.fetch_about,
+    "parameters": {
         "type": "object",
         "properties": {
             "username": {
@@ -34,24 +32,24 @@ known_reddit_function_2 = FunctionDeclaration(
         },
         "required": ["username"],
     },
-)
+}
 
-known_reddit_function_3 = FunctionDeclaration(
-    name="fetch_user_posts",
-    description=FunctionTools.KnownRedditFunctions.fetch_user_posts,
-    parameters={
+known_reddit_function_3 = {
+    "name": "fetch_user_posts",
+    "description": FunctionTools.KnownRedditFunctions.fetch_user_posts,
+    "parameters": {
         "type": "object",
         "properties": {
             "username": {"type": "string", "description": "The username to fetch the posts from"},
         },
         "required": ["username"],
     },
-)
+}
 
-unknown_reddit_function_1 = FunctionDeclaration(
-    name="search_reddit_posts",
-    description=FunctionTools.UnknownRedditFunctions.search_reddit_posts,
-    parameters={
+unknown_reddit_function_1 = {
+    "name": "search_reddit_posts",
+    "description": FunctionTools.UnknownRedditFunctions.search_reddit_posts,
+    "parameters": {
         "type": "object",
         "properties": {
             "query": {
@@ -95,12 +93,12 @@ unknown_reddit_function_1 = FunctionDeclaration(
         },
         "required": ["query"],
     },
-)
+}
 
-unknown_reddit_function_2 = FunctionDeclaration(
-    name="fetch_post_details",
-    description=FunctionTools.UnknownRedditFunctions.fetch_post_details,
-    parameters={
+unknown_reddit_function_2 = {
+    "name": "fetch_post_details",
+    "description": FunctionTools.UnknownRedditFunctions.fetch_post_details,
+    "parameters": {
         "type": "object",
         "properties": {
             "post_id": {
@@ -115,12 +113,12 @@ unknown_reddit_function_2 = FunctionDeclaration(
         },
         "required": ["post_id", "subreddit"],
     },
-)
+}
 
-email_check_function = FunctionDeclaration(
-    name="verify_email_address",
-    description=FunctionTools.VerifyEmailFunctions.verify_email_address,
-    parameters={
+email_check_function = {
+    "name": "verify_email_address",
+    "description": FunctionTools.VerifyEmailFunctions.verify_email_address,
+    "parameters": {
         "type": "object",
         "properties": {
             "email": {
@@ -130,12 +128,12 @@ email_check_function = FunctionDeclaration(
         },
         "required": ["email"],
     },
-)
+}
 
-static_image_analysis_function_1 = FunctionDeclaration(
-    name="extract_metadata",
-    description=FunctionTools.StaticImageExtraction.extract_metadata,
-    parameters={
+static_image_analysis_function_1 = {
+    "name": "extract_metadata",
+    "description": FunctionTools.StaticImageExtraction.extract_metadata,
+    "parameters": {
         "type": "object",
         "properties": {
             "image_path": {
@@ -145,13 +143,12 @@ static_image_analysis_function_1 = FunctionDeclaration(
         },
         "required": ["image_path"],
     },
-)
+}
 
-
-static_image_analysis_function_2 = FunctionDeclaration(
-    name="scan_firmware",
-    description=FunctionTools.StaticImageExtraction.scan_firmware,
-    parameters={
+static_image_analysis_function_2 = {
+    "name": "scan_firmware",
+    "description": FunctionTools.StaticImageExtraction.scan_firmware,
+    "parameters": {
         "type": "object",
         "properties": {
             "image_path": {
@@ -161,12 +158,12 @@ static_image_analysis_function_2 = FunctionDeclaration(
         },
         "required": ["image_path"],
     },
-)
+}
 
-static_image_analysis_function_3 = FunctionDeclaration(
-    name="extract_firmware",
-    description=FunctionTools.StaticImageExtraction.extract_firmware,
-    parameters={
+static_image_analysis_function_3 = {
+    "name": "extract_firmware",
+    "description": FunctionTools.StaticImageExtraction.extract_firmware,
+    "parameters": {
         "type": "object",
         "properties": {
             "input_path": {
@@ -189,12 +186,12 @@ static_image_analysis_function_3 = FunctionDeclaration(
         },
         "required": ["input_path", "skip", "count", "output_file_name"],
     },
-)
+}
 
-static_image_analysis_function_4 = FunctionDeclaration(
-    name="extract_strings",
-    description=FunctionTools.StaticImageExtraction.extract_strings,
-    parameters={
+static_image_analysis_function_4 = {
+    "name": "extract_strings",
+    "description": FunctionTools.StaticImageExtraction.extract_strings,
+    "parameters": {
         "type": "object",
         "properties": {
             "input_path": {
@@ -208,12 +205,12 @@ static_image_analysis_function_4 = FunctionDeclaration(
         },
         "required": ["input_path"],
     },
-)
+}
 
-active_image_analysis_function_1 = FunctionDeclaration(
-    name="verify_similar_faces",
-    description=FunctionTools.DeepScanEngine.verify_similar_faces,
-    parameters={
+active_image_analysis_function_1 = {
+    "name": "verify_similar_faces",
+    "description": FunctionTools.DeepScanEngine.verify_similar_faces,
+    "parameters": {
         "type": "object",
         "properties": {
             "image_path_1": {
@@ -224,12 +221,12 @@ active_image_analysis_function_1 = FunctionDeclaration(
         },
         "required": ["image_path_1", "image_path_2"],
     },
-)
+}
 
-active_image_analysis_function_2 = FunctionDeclaration(
-    name="face_attribute_analysis",
-    description=FunctionTools.DeepScanEngine.face_attribute_analysis,
-    parameters={
+active_image_analysis_function_2 = {
+    "name": "face_attribute_analysis",
+    "description": FunctionTools.DeepScanEngine.face_attribute_analysis,
+    "parameters": {
         "type": "object",
         "properties": {
             "image_path": {
@@ -239,12 +236,12 @@ active_image_analysis_function_2 = FunctionDeclaration(
         },
         "required": ["image_path"],
     },
-)
+}
 
-active_image_analysis_function_3 = FunctionDeclaration(
-    name="OCR_analysis",
-    description=FunctionTools.DeepScanEngine.OCR_analysis,
-    parameters={
+active_image_analysis_function_3 = {
+    "name": "OCR_analysis",
+    "description": FunctionTools.DeepScanEngine.OCR_analysis,
+    "parameters": {
         "type": "object",
         "properties": {
             "image_path": {
@@ -254,12 +251,12 @@ active_image_analysis_function_3 = FunctionDeclaration(
         },
         "required": ["image_path"],
     },
-)
+}
 
-image_geolocation_function_1 = FunctionDeclaration(
-    name="geolocate_local_image",
-    description=FunctionTools.ImageGeolocationEngine.geolocate_local_image,
-    parameters={
+image_geolocation_function_1 = {
+    "name": "geolocate_local_image",
+    "description": FunctionTools.ImageGeolocationEngine.geolocate_local_image,
+    "parameters": {
         "type": "object",
         "properties": {
             "image_path": {
@@ -273,33 +270,33 @@ image_geolocation_function_1 = FunctionDeclaration(
             },
             "country_code": {
                 "type": "string",
-                "description": "This is a 2-letter (e.g., 'US', 'FR'', 'DE') country code to narrow down the search. If unsure about the country, a worldwide search can be perform by using the default value of None",
+                "description": "This is a 2-letter (e.g., 'US', 'FR'', 'DE') country code to narrow down the search. If unsure about the country, a worldwide search can be performed by using the default value of None",
                 "default": None,
             },
             "center_latitude": {
                 "type": "number",
-                "description": "The latitute for the central point of the location if its known. If this is unsure, then use the default value of None for a worldwide search",
+                "description": "The latitude for the central point of the location if it's known. If unsure, use None for a worldwide search",
                 "default": None,
             },
             "center_longitude": {
                 "type": "number",
-                "description": "The longitude for the central point of the location if its known. If this is unsure, then use the default value of None for a worldwide search",
+                "description": "The longitude for the central point of the location if it's known. If unsure, use None for a worldwide search",
                 "default": None,
             },
             "radius": {
                 "type": "number",
-                "description": "The radius from the centeral point to search within. This is in Kilometers. If this is unsure, then use the default value of None",
+                "description": "The radius from the central point to search within (in kilometers). Use None for a worldwide search",
                 "default": None,
             },
         },
         "required": ["image_path"],
     },
-)
+}
 
-image_geolocation_function_2 = FunctionDeclaration(
-    name="geolocate_online_image",
-    description=FunctionTools.ImageGeolocationEngine.geolocate_online_image,
-    parameters={
+image_geolocation_function_2 = {
+    "name": "geolocate_online_image",
+    "description": FunctionTools.ImageGeolocationEngine.geolocate_online_image,
+    "parameters": {
         "type": "object",
         "properties": {
             "image_url": {
@@ -313,33 +310,33 @@ image_geolocation_function_2 = FunctionDeclaration(
             },
             "country_code": {
                 "type": "string",
-                "description": "This is a 2-letter (e.g., 'US', 'FR'', 'DE') country code to narrow down the search. If unsure about the country, a worldwide search can be perform by using the default value of None",
+                "description": "This is a 2-letter (e.g., 'US', 'FR', 'DE') country code to narrow down the search. If unsure about the country, a worldwide search can be performed by using the default value of None",
                 "default": None,
             },
             "center_latitude": {
                 "type": "number",
-                "description": "The latitude for the central point of the location if its known. If this is unsure, then use the default value of None for a worldwide search",
+                "description": "The latitude for the central point of the location if it's known. If unsure, use None for a worldwide search",
                 "default": None,
             },
             "center_longitude": {
                 "type": "number",
-                "description": "The longitude for the central point of the location if its known. If this is unsure, then use the default value of None for a worldwide search",
+                "description": "The longitude for the central point of the location if it's known. If unsure, use None for a worldwide search",
                 "default": None,
             },
             "radius": {
                 "type": "number",
-                "description": "The radius from the central point to search within. This is in Kilometers. If this is unsure, then use the default value of None",
+                "description": "The radius from the central point to search within (in kilometers). Use None for a worldwide search",
                 "default": None,
             },
         },
         "required": ["image_url"],
     },
-)
+}
 
-image_geolocation_function_3 = FunctionDeclaration(
-    name="geolocate_using_LLMs",
-    description=FunctionTools.ImageGeolocationEngine.geolocate_using_LLMs,
-    parameters={
+image_geolocation_function_3 = {
+    "name": "geolocate_using_LLMs",
+    "description": FunctionTools.ImageGeolocationEngine.geolocate_using_LLMs,
+    "parameters": {
         "type": "object",
         "properties": {
             "image_path": {
@@ -354,12 +351,12 @@ image_geolocation_function_3 = FunctionDeclaration(
         },
         "required": ["image_path"],
     },
-)
+}
 
-image_geolocation_function_4 = FunctionDeclaration(
-    name="combined_llm_deeplearning_analysis",
-    description=FunctionTools.ImageGeolocationEngine.combined_llm_deeplearning_analysis,
-    parameters={
+image_geolocation_function_4 = {
+    "name": "combined_llm_deeplearning_analysis",
+    "description": FunctionTools.ImageGeolocationEngine.combined_llm_deeplearning_analysis,
+    "parameters": {
         "type": "object",
         "properties": {
             "image_path": {
@@ -373,22 +370,22 @@ image_geolocation_function_4 = FunctionDeclaration(
             },
             "country_code": {
                 "type": "string",
-                "description": "This is a 2-letter (e.g., 'US', 'FR'', 'DE') country code to narrow down the search. If unsure about the country, a worldwide search can be perform by using the default value of None",
+                "description": "This is a 2-letter (e.g., 'US', 'FR', 'DE') country code to narrow down the search. If unsure about the country, a worldwide search can be performed by using the default value of None",
                 "default": None,
             },
             "center_latitude": {
                 "type": "number",
-                "description": "The latitude for the central point of the location if its known. If this is unsure, then use the default value of None for a worldwide search",
+                "description": "The latitude for the central point of the location if it's known. If unsure, use None for a worldwide search",
                 "default": None,
             },
             "center_longitude": {
                 "type": "number",
-                "description": "The longitude for the central point of the location if its known. If this is unsure, then use the default value of None for a worldwide search",
+                "description": "The longitude for the central point of the location if it's known. If unsure, use None for a worldwide search",
                 "default": None,
             },
             "radius": {
                 "type": "number",
-                "description": "The radius from the central point to search within. This is in Kilometers. If this is unsure, then use the default value of None",
+                "description": "The radius from the central point to search within (in kilometers). Use None for a worldwide search",
                 "default": None,
             },
             "prompt": {
@@ -399,12 +396,12 @@ image_geolocation_function_4 = FunctionDeclaration(
         },
         "required": ["image_path"],
     },
-)
+}
 
-instagram_engine_function_1 = FunctionDeclaration(
-    name="fetch_account_information",
-    description=FunctionTools.InstagramEngine.fetch_account_information,
-    parameters={
+instagram_engine_function_1 = {
+    "name": "fetch_account_information",
+    "description": FunctionTools.InstagramEngine.fetch_account_information,
+    "parameters": {
         "type": "object",
         "properties": {
             "username": {
@@ -414,12 +411,12 @@ instagram_engine_function_1 = FunctionDeclaration(
         },
         "required": ["username"],
     },
-)
+}
 
-instagram_engine_function_2 = FunctionDeclaration(
-    name="fetch_public_account_posts",
-    description=FunctionTools.InstagramEngine.fetch_public_account_posts,
-    parameters={
+instagram_engine_function_2 = {
+    "name": "fetch_public_account_posts",
+    "description": FunctionTools.InstagramEngine.fetch_public_account_posts,
+    "parameters": {
         "type": "object",
         "properties": {
             "username": {
@@ -429,42 +426,42 @@ instagram_engine_function_2 = FunctionDeclaration(
         },
         "required": ["username"],
     },
-)
+}
 
-ipinfo_engine_function_1 = FunctionDeclaration(
-    name="basic_ip_lookup",
-    description=FunctionTools.IPinfoEngine.basic_ip_lookup,
-    parameters={
+ipinfo_engine_function_1 = {
+    "name": "basic_ip_lookup",
+    "description": FunctionTools.IPinfoEngine.basic_ip_lookup,
+    "parameters": {
         "type": "object",
         "properties": {
             "ipaddress": {
                 "type": "string",
-                "description": "The IPaddress that needs to be scanned",
+                "description": "The IP address that needs to be scanned",
             }
         },
         "required": ["ipaddress"],
     },
-)
+}
 
-ipinfo_engine_function_2 = FunctionDeclaration(
-    name="core_api_lookups",
-    description=FunctionTools.IPinfoEngine.core_api_lookups,
-    parameters={
+ipinfo_engine_function_2 = {
+    "name": "core_api_lookups",
+    "description": FunctionTools.IPinfoEngine.core_api_lookups,
+    "parameters": {
         "type": "object",
         "properties": {
             "ipaddress": {
                 "type": "string",
-                "description": "The IPaddress that needs to be scanned",
+                "description": "The IP address that needs to be scanned",
             }
         },
         "required": ["ipaddress"],
     },
-)
+}
 
-ipinfo_engine_function_3 = FunctionDeclaration(
-    name="core_api_lookups_asn",
-    description=FunctionTools.IPinfoEngine.core_api_lookups_asn,
-    parameters={
+ipinfo_engine_function_3 = {
+    "name": "core_api_lookups_asn",
+    "description": FunctionTools.IPinfoEngine.core_api_lookups_asn,
+    "parameters": {
         "type": "object",
         "properties": {
             "asn_number": {
@@ -474,12 +471,12 @@ ipinfo_engine_function_3 = FunctionDeclaration(
         },
         "required": ["asn_number"],
     },
-)
+}
 
-perplexity_engine_function_1 = FunctionDeclaration(
-    name="search_perplexity_text",
-    description=FunctionTools.PerplexityEngine.search_perplexity_text,
-    parameters={
+perplexity_engine_function_1 = {
+    "name": "search_perplexity_text",
+    "description": FunctionTools.PerplexityEngine.search_perplexity_text,
+    "parameters": {
         "type": "object",
         "properties": {
             "search_request": {
@@ -489,27 +486,27 @@ perplexity_engine_function_1 = FunctionDeclaration(
         },
         "required": ["search_request"],
     },
-)
+}
 
-perplexity_engine_function_2 = FunctionDeclaration(
-    name="search_perplexity_images",
-    description=FunctionTools.PerplexityEngine.search_perplexity_images,
-    parameters={
+perplexity_engine_function_2 = {
+    "name": "search_perplexity_images",
+    "description": FunctionTools.PerplexityEngine.search_perplexity_images,
+    "parameters": {
         "type": "object",
         "properties": {
             "search_request": {
                 "type": "string",
-                "description": "the query which needs to be passed to perplexity",
+                "description": "The query which needs to be passed to perplexity",
             }
         },
         "required": ["search_request"],
     },
-)
+}
 
-username_check_engine_function_1 = FunctionDeclaration(
-    name="check_usernames",
-    description=FunctionTools.UsernameCheckEngine.check_usernames,
-    parameters={
+username_check_engine_function_1 = {
+    "name": "check_usernames",
+    "description": FunctionTools.UsernameCheckEngine.check_usernames,
+    "parameters": {
         "type": "object",
         "properties": {
             "username": {
@@ -519,12 +516,12 @@ username_check_engine_function_1 = FunctionDeclaration(
         },
         "required": ["username"],
     },
-)
+}
 
-github_engine_function_1 = FunctionDeclaration(
-    name="fetch_about",
-    description=FunctionTools.GitHubEngine.fetch_about,
-    parameters={
+github_engine_function_1 = {
+    "name": "fetch_about",
+    "description": FunctionTools.GitHubEngine.fetch_about,
+    "parameters": {
         "type": "object",
         "properties": {
             "username": {
@@ -534,12 +531,12 @@ github_engine_function_1 = FunctionDeclaration(
         },
         "required": ["username"],
     },
-)
+}
 
-github_engine_function_2 = FunctionDeclaration(
-    name="fetch_repos",
-    description=FunctionTools.GitHubEngine.fetch_repos,
-    parameters={
+github_engine_function_2 = {
+    "name": "fetch_repos",
+    "description": FunctionTools.GitHubEngine.fetch_repos,
+    "parameters": {
         "type": "object",
         "properties": {
             "username": {
@@ -549,12 +546,12 @@ github_engine_function_2 = FunctionDeclaration(
         },
         "required": ["username"],
     },
-)
+}
 
-github_engine_function_3 = FunctionDeclaration(
-    name="get_repo_secrets",
-    description=FunctionTools.GitHubEngine.get_repo_secrets,
-    parameters={
+github_engine_function_3 = {
+    "name": "get_repo_secrets",
+    "description": FunctionTools.GitHubEngine.get_repo_secrets,
+    "parameters": {
         "type": "object",
         "properties": {
             "repository_names": {
@@ -583,9 +580,8 @@ github_engine_function_3 = FunctionDeclaration(
         },
         "required": ["repository_names"],
     },
-)
+}
 
-# The anyOf isn't working as I expected!
 nettacker_parameters = {
     "type": "object",
     "properties": {
@@ -595,7 +591,7 @@ nettacker_parameters = {
         },
         "selected_modules": {
             "type": "string",
-            "description": "Comma-separated module names to run for the scan (e.g. 'port_scan,dir_scan').",  # we'll have to use oneOf here!
+            "description": "Comma-separated module names to run for the scan (e.g. 'port_scan,dir_scan').",
             "enum": nettacker_module_names(),
         },
         "targets_list": {
@@ -723,16 +719,16 @@ nettacker_parameters = {
     "required": ["targets", "selected_modules"],
 }
 
-nettacker_engine_function_1 = FunctionDeclaration(
-    name="nettacker_run",  # yep the function is simply called run
-    description=FunctionTools.NettackerEngine.nettacker_run,
-    parameters=nettacker_parameters,
-)
+nettacker_engine_function_1 = {
+    "name": "nettacker_run",
+    "description": FunctionTools.NettackerEngine.nettacker_run,
+    "parameters": nettacker_parameters,
+}
 
-haveibeenpwned_engine_function_1 = FunctionDeclaration(
-    name="check_email_against_breach_data",
-    description=FunctionTools.HaveIBeenPwnedEngine.check_email_against_breach_data,
-    parameters={
+haveibeenpwned_engine_function_1 = {
+    "name": "check_email_against_breach_data",
+    "description": FunctionTools.HaveIBeenPwnedEngine.check_email_against_breach_data,
+    "parameters": {
         "type": "object",
         "properties": {
             "email": {
@@ -742,12 +738,12 @@ haveibeenpwned_engine_function_1 = FunctionDeclaration(
         },
         "required": ["email"],
     },
-)
+}
 
-ProfessionalEmailFinder_engine_function_1 = FunctionDeclaration(
-    name="find_emails_for_domain",
-    description=FunctionTools.ProfessionalEmailFinderEngine.find_emails_for_domain,
-    parameters={
+ProfessionalEmailFinder_engine_function_1 = {
+    "name": "find_emails_for_domain",
+    "description": FunctionTools.ProfessionalEmailFinderEngine.find_emails_for_domain,
+    "parameters": {
         "type": "object",
         "properties": {
             "domain_name": {
@@ -757,12 +753,12 @@ ProfessionalEmailFinder_engine_function_1 = FunctionDeclaration(
         },
         "required": ["domain_name"],
     },
-)
+}
 
-ProfessionalEmailFinder_engine_function_2 = FunctionDeclaration(
-    name="find_emails_for_person",
-    description=FunctionTools.ProfessionalEmailFinderEngine.find_emails_for_person,
-    parameters={
+ProfessionalEmailFinder_engine_function_2 = {
+    "name": "find_emails_for_person",
+    "description": FunctionTools.ProfessionalEmailFinderEngine.find_emails_for_person,
+    "parameters": {
         "type": "object",
         "properties": {
             "domain_name": {
@@ -780,12 +776,12 @@ ProfessionalEmailFinder_engine_function_2 = FunctionDeclaration(
         },
         "required": ["domain_name", "first_name", "last_name"],
     },
-)
+}
 
-GetPages_engine_function_1 = FunctionDeclaration(
-    name="fetch_get_page",
-    description=FunctionTools.GetPagesEngine.fetch_get_page,
-    parameters={
+GetPages_engine_function_1 = {
+    "name": "fetch_get_page",
+    "description": FunctionTools.GetPagesEngine.fetch_get_page,
+    "parameters": {
         "type": "object",
         "properties": {
             "url": {
@@ -795,12 +791,12 @@ GetPages_engine_function_1 = FunctionDeclaration(
         },
         "required": ["url"],
     },
-)
+}
 
-GetPages_engine_function_2 = FunctionDeclaration(
-    name="fetch_get_pages_bulk",
-    description=FunctionTools.GetPagesEngine.fetch_get_pages_bulk,
-    parameters={
+GetPages_engine_function_2 = {
+    "name": "fetch_get_pages_bulk",
+    "description": FunctionTools.GetPagesEngine.fetch_get_pages_bulk,
+    "parameters": {
         "type": "object",
         "properties": {
             "urls": {
@@ -810,12 +806,12 @@ GetPages_engine_function_2 = FunctionDeclaration(
         },
         "required": ["urls"],
     },
-)
+}
 
-HyperlinkExtract_engine_function_1 = FunctionDeclaration(
-    name="hyperlinks_for_single_url",
-    description=FunctionTools.HyperlinkExtractEngine.hyperlinks_for_single_url,
-    parameters={
+HyperlinkExtract_engine_function_1 = {
+    "name": "hyperlinks_for_single_url",
+    "description": FunctionTools.HyperlinkExtractEngine.hyperlinks_for_single_url,
+    "parameters": {
         "type": "object",
         "properties": {
             "url": {
@@ -825,12 +821,12 @@ HyperlinkExtract_engine_function_1 = FunctionDeclaration(
         },
         "required": ["url"],
     },
-)
+}
 
-HyperlinkExtract_engine_function_2 = FunctionDeclaration(
-    name="hyperlinks_for_multiple_urls",
-    description=FunctionTools.HyperlinkExtractEngine.hyperlinks_for_multiple_urls,
-    parameters={
+HyperlinkExtract_engine_function_2 = {
+    "name": "hyperlinks_for_multiple_urls",
+    "description": FunctionTools.HyperlinkExtractEngine.hyperlinks_for_multiple_urls,
+    "parameters": {
         "type": "object",
         "properties": {
             "urls": {
@@ -840,12 +836,12 @@ HyperlinkExtract_engine_function_2 = FunctionDeclaration(
         },
         "required": ["urls"],
     },
-)
+}
 
-VerifyAIGeneratedImage_engine_function_1 = FunctionDeclaration(
-    name="metadata_analysis",
-    description=FunctionTools.VerifyAIGeneratedImageEngine.metadata_analysis,
-    parameters={
+VerifyAIGeneratedImage_engine_function_1 = {
+    "name": "metadata_analysis",
+    "description": FunctionTools.VerifyAIGeneratedImageEngine.metadata_analysis,
+    "parameters": {
         "type": "object",
         "properties": {
             "image_path": {
@@ -855,12 +851,12 @@ VerifyAIGeneratedImage_engine_function_1 = FunctionDeclaration(
         },
         "required": ["image_path"],
     },
-)
+}
 
-VerifyAIGeneratedImage_engine_function_2 = FunctionDeclaration(
-    name="deepscan_fake_image_verification",
-    description=FunctionTools.VerifyAIGeneratedImageEngine.deepscan_fake_image_verification,
-    parameters={
+VerifyAIGeneratedImage_engine_function_2 = {
+    "name": "deepscan_fake_image_verification",
+    "description": FunctionTools.VerifyAIGeneratedImageEngine.deepscan_fake_image_verification,
+    "parameters": {
         "type": "object",
         "properties": {
             "image_path": {
@@ -870,12 +866,12 @@ VerifyAIGeneratedImage_engine_function_2 = FunctionDeclaration(
         },
         "required": ["image_path"],
     },
-)
+}
 
-VerifyAIGeneratedImage_engine_function_3 = FunctionDeclaration(
-    name="isgsenAI",
-    description=FunctionTools.VerifyAIGeneratedImageEngine.isgsenAI,
-    parameters={
+VerifyAIGeneratedImage_engine_function_3 = {
+    "name": "isgsenAI",
+    "description": FunctionTools.VerifyAIGeneratedImageEngine.isgsenAI,
+    "parameters": {
         "type": "object",
         "properties": {
             "image_path": {
@@ -885,12 +881,12 @@ VerifyAIGeneratedImage_engine_function_3 = FunctionDeclaration(
         },
         "required": ["image_path"],
     },
-)
+}
 
-VerifyAIGeneratedImage_engine_function_4 = FunctionDeclaration(
-    name="combined_AI_image_verification",
-    description=FunctionTools.VerifyAIGeneratedImageEngine.combined_AI_image_verification,
-    parameters={
+VerifyAIGeneratedImage_engine_function_4 = {
+    "name": "combined_AI_image_verification",
+    "description": FunctionTools.VerifyAIGeneratedImageEngine.combined_AI_image_verification,
+    "parameters": {
         "type": "object",
         "properties": {
             "image_path": {
@@ -900,9 +896,8 @@ VerifyAIGeneratedImage_engine_function_4 = FunctionDeclaration(
         },
         "required": ["image_path"],
     },
-)
+}
 
-# Query this based on the class and feed the arguments with **args to the functions
 class_function_dict = {
     "RedditKnownEngine": [
         known_reddit_function_1,

@@ -66,7 +66,7 @@ class OAtlas(ArgParser):
             }
         """
         func_to_class = {
-            func.name: cls_name
+            func["name"]: cls_name
             for cls_name, funcs in class_function_dict.items()
             for func in funcs
         }
@@ -145,11 +145,11 @@ class OAtlas(ArgParser):
         arg_values = {}
         for arg_name, arg_info in properties:
             required = arg_name in definition.get("required")
-            default_val = arg_info.default  # This will be None by default anyways
+            default_val = arg_info.get("default", None)  # This will be None by default anyways
 
             print(f"\n  » Argument: '{arg_name}' {'(required)' if required else '(optional)'}")
-            print(f"    Description: {arg_info.description}")
-            print(f"    Type: {arg_info.type.lower()}")
+            print(f"    Description: {arg_info['description']}")
+            print(f"    Type: {arg_info['type'].lower()}")
 
             while True:
                 prompt = f"    Enter value for {arg_name}: "
@@ -164,19 +164,19 @@ class OAtlas(ArgParser):
                         break
 
                 try:
-                    if arg_info.type.lower() == "integer":
+                    if arg_info["type"].lower() == "integer":
                         user_val = int(user_val)
-                    elif arg_info.type.lower() == "number":
+                    elif arg_info["type"].lower() == "number":
                         user_val = float(user_val)
-                    elif arg_info.type.lower() == "boolean":
+                    elif arg_info["type"].lower() == "boolean":
                         user_val = user_val.lower() in ["true", "1", "yes", "y"]
-                    elif arg_info.type.lower() == "array":
+                    elif arg_info["type"].lower() == "array":
                         user_val = [x.strip() for x in user_val.split(",")]
 
                     arg_values[arg_name] = user_val
                     break
                 except ValueError:
-                    print(f"    Invalid type. Please enter a valid {arg_info.type.lower()}.")
+                    print(f"    Invalid type. Please enter a valid {arg_info['type'].lower()}.")
 
         return arg_values
 
@@ -186,10 +186,10 @@ class OAtlas(ArgParser):
         if arg_values is None:
             return  # Skip if definition was not found
 
-        print(f"\n✅ Running '{func_name}' with arguments: {arg_values}\n")
+        print(f"\nRunning '{func_name}' with arguments: {arg_values}\n")
         try:
             result = callable_functions.get(func_name)(**arg_values)
-            print(f"✨ Result: {result}")
+            print(f"Result: {result}")
         except Exception as e:
             log.error(f"An error occurred while running '{func_name}': {e}")
 
@@ -299,9 +299,9 @@ class OAtlas(ArgParser):
         """
         details = {}
         for func in functions:
-            details[func.name] = {
-                "description": func.description.strip(),
-                "properties": func.parameters.properties,
-                "required": func.parameters.required,
+            details[func["name"]] = {
+                "description": func["description"].strip(),
+                "properties": func["parameters"]["properties"],
+                "required": func["parameters"]["required"],
             }
         return details
