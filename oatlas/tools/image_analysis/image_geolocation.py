@@ -7,38 +7,14 @@ from typing import Dict, Union
 import magic
 import requests
 from dotenv import load_dotenv
-from google import genai
-from google.genai import types
 
 from oatlas.config import Config
+from oatlas.core.lib.agent import GeneralAgent
 from oatlas.logger import get_logger
-from oatlas.utils.common import read_file
-from oatlas.utils.structure import VertexaiGeolocationResponse
+from oatlas.utils.structure import LLMGeolocationResponse
 
 log = get_logger()
 load_dotenv()
-
-
-class GeneralAgent:
-    """
-    Defines the functionality of the general agent
-    """
-
-    def __init__(self):
-        self.project_id = os.getenv(Config.settings.project_id)
-        self.location = Config.settings.location
-
-    def initialise(self):
-        """
-        Initialises the general agent. It only returns the client object. Can be used anyhow
-        """
-        client = genai.Client(
-            vertexai=Config.settings.vertexai,
-            project=self.project_id,
-            location=self.location,
-        )
-
-        return client
 
 
 def analyse_picarta_response(response: Dict) -> Dict:
@@ -237,9 +213,9 @@ class ImageGeolocationEngine:
             return error_msg
 
     @staticmethod
-    def geolocate_using_vertexAI(
+    def geolocate_using_LLMs(
         image_path: str, prompt: str = None
-    ) -> Union[VertexaiGeolocationResponse, None]:
+    ) -> Union[LLMGeolocationResponse, None]:
         """
         This uses vertexAI to make inference on an Image. This is a better option for geolocation cause its an LLM ofcourse!
 
@@ -248,8 +224,6 @@ class ImageGeolocationEngine:
         Returns:
             A parsed pydantic response or None depending on if it succeeded or not
         """
-        client = GeneralAgent().initialise()
-
         image_path = fix_absolute_path(image_path)
 
         mime_type = magic.from_file(image_path, mime=True)
@@ -272,24 +246,24 @@ class ImageGeolocationEngine:
         try:
             if prompt is None:
                 prompt = "You are an image geolocation expert"
-            chat = client.chats.create(
-                model=Config.settings.model,
-                config=types.GenerateContentConfig(
-                    temperature=0.2,
-                    response_schema=VertexaiGeolocationResponse,
-                    response_mime_type="application/json",
-                    system_instruction=prompt,
-                ),
+
+            parts = {"image_path": image_path, "mime_type": mime_type, "image_bytes": image_bytes}
+
+            response = GeneralAgent().process(
+                prompt=parts,
+                temperature=0,
+                system_instruction=prompt,
+                response_schema=LLMGeolocationResponse,
+                response_mime_type="application/json",
             )
 
-            response = chat.send_message(
-                [
-                    read_file(Config.path.GeolocateImageVertexAI),
-                    types.Part(inline_data=types.Blob(mime_type=mime_type, data=image_bytes)),
-                ]
-            )
-
-            return response.parsed.model_dump()  # Return as a dictionary instead of a BaseModel
+            try:
+                return (
+                    response.parsed.model_dump()
+                )  # Return as a dictionary instead of a BaseModel
+            except Exception:
+                print("in here")
+                return response
 
         except Exception as e:
             log.error(f"Couldn't use VertexAI for geolocation: {e}")
@@ -318,13 +292,11 @@ class ImageGeolocationEngine:
             radius=radius,
         )
 
-        vertex_result = ImageGeolocationEngine.geolocate_using_vertexAI(
-            image_path=image_path, prompt=prompt
-        )
+        result = ImageGeolocationEngine.geolocate_using_LLMs(image_path=image_path, prompt=prompt)
 
         return {
             "picarta": picarta_result,
-            "vertexai": vertex_result,
+            "LLMs": result,
         }
 
     @classmethod

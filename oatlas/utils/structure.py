@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class VertexaiGeolocationResponse(BaseModel):
+class LLMGeolocationResponse(BaseModel):
     """
     The ImageGeolocation response is delibrate enough to force it to look at
     all the possible scenrios before evaluation

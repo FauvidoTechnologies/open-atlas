@@ -275,7 +275,7 @@ ImageGeolocationEngine:
       returns:
         type: dict|string
         desc: "Dictionary of relevant fields (camera_maker, camera_model, topk_predictions_dict) if successful, else error string"
-    geolocate_using_vertexAI:
+    geolocate_using_LLMs:
       desc: "Performs geolocation inference using VertexAI with LLM-based reasoning"
       arguments:
         arg1:
@@ -285,7 +285,7 @@ ImageGeolocationEngine:
           value: "prompt"
           desc: "short stub of information to guide geolocation"
       returns:
-        type: VertexaiGeolocationResponse|None
+        type: LLMGeolocationResponse|None
         desc: "Parsed Pydantic response with geolocation info if successful, else None"
     combined_llm_deeplearning_analysis:
       desc: "Runs both Picarta deep learning geolocation and VertexAI LLM inference on the same local image and merges results"
@@ -313,7 +313,7 @@ ImageGeolocationEngine:
         desc: >
           Dictionary with two keys:  
           - picarta: output from `geolocate_local_image`  
-          - vertexai: output from `geolocate_using_vertexAI`
+          - LLMs: output from `geolocate_using_LLMs`
 IPinfoEngine:
   common_name: "ip-lookups"
   abbreviated_name: "ipE"

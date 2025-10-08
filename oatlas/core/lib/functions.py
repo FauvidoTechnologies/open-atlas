@@ -337,8 +337,8 @@ image_geolocation_function_2 = FunctionDeclaration(
 )
 
 image_geolocation_function_3 = FunctionDeclaration(
-    name="geolocate_using_vertexAI",
-    description=FunctionTools.ImageGeolocationEngine.geolocate_using_vertexAI,
+    name="geolocate_using_LLMs",
+    description=FunctionTools.ImageGeolocationEngine.geolocate_using_LLMs,
     parameters={
         "type": "object",
         "properties": {

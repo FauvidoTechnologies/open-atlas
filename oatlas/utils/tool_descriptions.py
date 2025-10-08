@@ -214,9 +214,9 @@ class FunctionTools:
 			This is a json dump on a dictionary.
 		"""
 
-        geolocate_using_vertexAI = """
-            This function performs image based geolocation for images stored locally. It uses VertexAI's gemini-2.5-pro to perform geolocation. It
-            returns a pydantic BaseModel with the following fields:
+        geolocate_using_LLMs = """
+            This function performs image based geolocation for images stored locally. It uses VertexAI's gemini-2.5-pro and OpenAI's GPT-5o to perform geolocation.
+            It returns a pydantic BaseModel with the following fields:
 
             Initial_observations: what is visible
             Geographical_clues: e.g. climate, vegetation, terrain
