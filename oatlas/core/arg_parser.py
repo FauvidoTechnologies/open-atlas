@@ -15,13 +15,17 @@ log = get_logger()
 
 
 class ArgParser(ArgumentParser):
+    _functions_tuples_cache = None
+
     def __init__(self) -> None:
         super().__init__(prog="oatlas", add_help=False)
 
-        # Load the functions for AA as a set
-        self.functions_tuple = self.load_functions()
-        self.functions = self.functions_tuple[0]
-        self.functions_desc_dict = self.functions_tuple[1]
+        # Load the functions for AA as a set and caching it
+        if ArgParser._functions_tuples_cache is None:
+            ArgParser._functions_tuples_cache = self.load_functions()
+
+        self.functions = ArgParser._functions_tuples_cache[0]
+        self.functions_desc_dict = ArgParser._functions_tuples_cache[1]
 
         # Add and parse arguments
         self.add_arguments()
