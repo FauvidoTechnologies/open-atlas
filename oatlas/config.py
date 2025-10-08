@@ -155,6 +155,7 @@ class Settings:
     ]
     verbose_mode = False
     functions = None
+    use_openai = False
 
 
 class NettackerConfig:

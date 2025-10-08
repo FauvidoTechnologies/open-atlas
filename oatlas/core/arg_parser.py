@@ -1,3 +1,4 @@
+import os
 import subprocess
 import sys
 from argparse import ArgumentParser
@@ -101,6 +102,14 @@ class ArgParser(ArgumentParser):
             default=Config.settings.paid_keys,
             help="Provide paid keys for APIs if needed",
         )
+        unified_options.add_argument(
+            "-o",
+            "--use-openai",
+            action="store_true",
+            dest="use_openai",
+            default=Config.settings.use_openai,  # Default at False
+            help="Use this flag if you want to run the loop using OpenAI's GPT-4o",
+        )
 
     def parse_arguments(self):
         """
@@ -166,5 +175,11 @@ class ArgParser(ArgumentParser):
             die_failure(
                 f"These functions are not supported: {options.functions-self.functions}. Please check for typos and refer to the functions list"
             )
+
+        if options.use_openai:
+            if os.getenv("openai_api_key") is None:
+                die_failure(
+                    "Please set the OpenAI key in the enviornment if you wish to use its models!"
+                )
 
         self.arguments = options
