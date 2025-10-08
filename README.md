@@ -1,6 +1,15 @@
 # OAtlas
 
-**OAtlas** is an OSINT tool with 35+ functions to aid investigations. Imagine **reverse email/username lookups**, **GitHub secrets extraction**, **reddit/instagram/twitter information extraction**, **IP lookups**, **geolocation**, **image metadata and exif extraction**, **AI generated/tweaked image checker** etc. all combined into one tool. 
+**OAtlas** is an OSINT tool with 35+ functions to aid investigations. Imagine 
+
+- **reverse email/username lookups**
+- **GitHub secrets extraction**
+- **reddit/instagram/twitter information extraction**
+- **IP lookups**, **geolocation**
+- **image metadata and exif extraction**
+- **AI generated/tweaked image checker** 
+
+etc. all combined into one tool!
 
 `OAtlas` is designed for manual tool execution, making it ideal for industry experts who know exactly what they want to do. It also has a `plug-and-play` architecture which makes adding tools extremely easy. (refer to the `docs/` for more information on this)
 
@@ -42,10 +51,11 @@ Some functions require API keys. Place them in the `.env.private` file:
 
 ```
 project_id=None
+openai_api_key=None
 ip_info_token=None
 perplexity_default_key=None
 picarta_api_key=None
-hibp_api_key=None
+hibp-api-key=None
 hunter_api_key=None
 isgen_api_key=None
 isgen_bearer=None
@@ -54,12 +64,16 @@ isgen_bearer=None
 > NOTE: All API keys are optional. Functions that don’t require them will work without issue.
 
 
-- `project_id` – For VertexAI projects (We're gradually adding OpenAI support for these functions).
-- `perplexity_default_key` – Required for search-based functions. You can get free ones at [perplexity's website](https://www.perplexity.ai/help-center/en/articles/10352995-api-settings).
-- `hunter_api_key` – Required for reverse-email lookups using [Hunter](https://hunter.io). Free-tier keys are sufficient.
-- `hibp_api_key` – Required for `HaveIBeenPwned` searches, this only has paid subscriptions sadly!
-- `isgen_api_key` & `isgen_bearer` – For AI image detection using [isgen](https://isgen.ai).
+- `project_id` - If you wish to use VertexAI for running any agent present in the architecture.
+- `openai_api_key` - If you wish to use OpenAI models for running any agent present in the architecture.
+- `perplexity_default_key` - Required for search-based functions. You can get free ones at [perplexity's website](https://www.perplexity.ai/help-center/en/articles/10352995-api-settings).
+- `hunter_api_key` - Required for reverse-email lookups using [Hunter](https://hunter.io). Free-tier keys are sufficient.
+- `hibp_api_key` - Required for `HaveIBeenPwned` searches, this only has paid subscriptions sadly!
+- `isgen_api_key` & `isgen_bearer` - For AI image detection using [isgen](https://isgen.ai).
 
+> NOTE: You will require LLMs if you wish to run functions like for geolocation, you will need either one of the two API keys
+
+--
 
 #### Finding isgen API and auth keys
 
@@ -96,6 +110,12 @@ poetry run python3 oatlas.py -f "<function-name>" -v
 ```
 
 Once you finish running a function, `oatlas` will ask you if you want to run more functions and if yes, then choose which ones and run them.
+
+You can enable OpenAI models using the `-o` flag:
+
+```sh
+poetry run python3 oatlas.py -f "<function-name-that-uses-LLMs>" -v -o
+```
 
 ### Web support
 
