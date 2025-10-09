@@ -1,1 +1,13 @@
 .env
+oatlas/__pycache__/*
+oatlas/__pycache__
+oatlas/core/__pycache__/*
+oatlas/core/__pycache__
+oatlas/core/lib/__pycache__/*
+oatlas/core/lib/__pycache__
+oatlas/tools/AI_image_detector/__pycache__/
+oatlas/tools/AI_image_detector/__pycache__/*
+oatlas/tools/image_analysis/__pycache__/*
+oatlas/tools/image_analysis/__pycache__
+oatlas/utils/__pycache__/
+oatlas/utils/__pycache__/*
