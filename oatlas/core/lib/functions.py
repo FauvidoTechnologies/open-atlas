@@ -869,8 +869,8 @@ VerifyAIGeneratedImage_engine_function_2 = {
 }
 
 VerifyAIGeneratedImage_engine_function_3 = {
-    "name": "isgsenAI",
-    "description": FunctionTools.VerifyAIGeneratedImageEngine.isgsenAI,
+    "name": "isgenAI",
+    "description": FunctionTools.VerifyAIGeneratedImageEngine.isgenAI,
     "parameters": {
         "type": "object",
         "properties": {

@@ -625,7 +625,7 @@ VerifyAIGeneratedImageEngine:
       returns:
         type: dict
         desc: "Verification results with probability scores."
-    isgsenAI:
+    isgenAI:
       desc: "Uses the external IsgenAI verification service to determine whether an image is AI-generated. This function works well and is more accurate!"
       arguments:
         arg1:

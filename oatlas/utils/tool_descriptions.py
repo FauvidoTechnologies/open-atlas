@@ -619,7 +619,7 @@ class FunctionTools:
         	might or might now work!
         """
 
-        isgsenAI = """
+        isgenAI = """
         	This is the best option. The API runs SOTA models in the background which are extremely good at giving out a probability score for
         	AI generated images (human vs AI).
 

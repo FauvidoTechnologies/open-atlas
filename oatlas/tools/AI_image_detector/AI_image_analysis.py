@@ -100,7 +100,7 @@ class VerifyAIGeneratedImageEngine:
         return result
 
     @staticmethod
-    def isgsenAI(image_path: str) -> Union[Dict[str, str], None]:
+    def isgenAI(image_path: str) -> Union[Dict[str, str], None]:
         """
         We don't need any session cookies if we do this using playwright. I have the script written inside utils directory.
         There is only one caveat, we'll have to run this with headless=False because for this to work we probably need the
@@ -249,7 +249,7 @@ class VerifyAIGeneratedImageEngine:
 
         # Isgen API check
         try:
-            isgen_result = VerifyAIGeneratedImageEngine.isgsenAI(image_path)
+            isgen_result = VerifyAIGeneratedImageEngine.isgenAI(image_path)
             if isgen_result and "status_code" in isgen_result:
                 if isgen_result["status_code"] == 200:
                     result["isgenai"]["status"] = "found"
