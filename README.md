@@ -11,6 +11,9 @@
 
 etc. all combined into one tool!
 
+> [!NOTE]
+> Coming soon -> Court records finder with a locally indexed database
+
 `OAtlas` is designed for manual tool execution, making it ideal for industry experts who know exactly what they want to do. It also has a `plug-and-play` architecture which makes adding tools extremely easy. (refer to the `docs/` for more information on this)
 
 It is a port of `Atlas` which is an upcoming fully automated OSINT tool. For more information about [Atlas](#atlas), refer to the section at the end.
