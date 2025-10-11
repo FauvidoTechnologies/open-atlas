@@ -1,7 +1,3 @@
-# Copyright (c) 2025 Achintya Jai
-# This file is part of the Atlas project.
-# All rights reserved. Unauthorized use prohibited.
-
 import random
 import re
 import smtplib

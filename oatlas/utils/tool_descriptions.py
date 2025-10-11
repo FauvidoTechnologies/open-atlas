@@ -650,3 +650,94 @@ class FunctionTools:
 
 			Note that if the results are contradictory between the two AI models, always prefer the IsgenAI one.
 		"""
+
+    class OathNetEngine:
+        get_breached_data = """
+			Queries the OathNet `/search-breach/` endpoint for any publicly available breach data related to the given query string.
+
+			This endpoint is used to determine whether the target entity (email address, username, or phone number) appears in known
+			data breaches indexed by OathNet. However, it also provides comprehensive contextual data - not just a "breached or not"
+			flag.
+
+			The returned dictionary typically contains:
+			  - breach_count: Total number of breach records found.
+			  - breaches: A list of breach entries, each including:
+			      - name: Name or domain of the breached service (e.g. 'Dropbox')
+			      - date: The date when the breach occurred.
+			      - compromised_data: Types of exposed data (e.g. 'passwords', 'emails').
+			      - source: Reference or URL to OathNet’s breach record.
+			      - severity: OathNet’s internal classification of sensitivity.
+			      - password_hash_type: If available, indicates hashing scheme used.
+			      - snippet / preview: Optional preview or hashed credentials excerpt.
+			  - query: The input query string.
+			  - timestamp: When the lookup was performed.
+
+			This endpoint is useful when you need not just a yes/no on whether an entity was breached, but also "what".
+		"""
+
+        get_stealer_logs = """
+			Queries the OathNet `/search-stealer/` endpoint for stealer or infostealer logs associated with the provided query.
+
+			Unlike breaches, which are generally large-scale data leaks, stealer logs are usually obtained from infected endpoints via
+			malware such as RedLine, Raccoon, or Vidar. These logs may contain sensitive information from compromised systems.
+
+			The returned dictionary typically contains:
+			  - log_count: Number of matching stealer log entries.
+			  - logs: A list of dictionaries containing fields such as:
+			      - credential_source: The infected application (e.g. 'Chrome', 'Edge').
+			      - username / email: Extracted credential identifier.
+			      - password: Plaintext or obfuscated password (if available).
+			      - machine_name: Hostname of the compromised system.
+			      - country / ip: Geolocation or IP address (if provided by the feed).
+			      - timestamp: When the stealer sample was first observed.
+			      - source: Dataset or feed name from which the log was indexed.
+			  - query: The input query string.
+			  - metadata: Optional extra info like sample hash, stealer family, etc.
+		"""
+
+        combined_oathnet_search = """
+			Performs a combined search across both `/search-breach/` and `/search-stealer/` endpoints to obtain a unified intelligence
+			report about the queried entity. 
+
+			This function initializes the OathNet session if required, then:
+			  1. Retrieves all breach records.
+			  2. Retrieves any stealer log records.
+			  3. Aggregates the results into a single unified dictionary.
+
+			Information given by breached_data:
+				The returned dictionary typically contains:
+				  - breach_count: Total number of breach records found.
+				  - breaches: A list of breach entries, each including:
+				      - name: Name or domain of the breached service (e.g. 'Dropbox')
+				      - date: The date when the breach occurred.
+				      - compromised_data: Types of exposed data (e.g. 'passwords', 'emails').
+				      - source: Reference or URL to OathNet’s breach record.
+				      - severity: OathNet’s internal classification of sensitivity.
+				      - password_hash_type: If available, indicates hashing scheme used.
+				      - snippet / preview: Optional preview or hashed credentials excerpt.
+				  - query: The input query string.
+				  - timestamp: When the lookup was performed.	
+
+			Information given by stealer_logs:
+				The returned dictionary typically contains:
+				  - log_count: Number of matching stealer log entries.
+				  - logs: A list of dictionaries containing fields such as:
+				      - credential_source: The infected application (e.g. 'Chrome', 'Edge').
+				      - username / email: Extracted credential identifier.
+				      - password: Plaintext or obfuscated password (if available).
+				      - machine_name: Hostname of the compromised system.
+				      - country / ip: Geolocation or IP address (if provided by the feed).
+				      - timestamp: When the stealer sample was first observed.
+				      - source: Dataset or feed name from which the log was indexed.
+				  - query: The input query string.
+				  - metadata: Optional extra info like sample hash, stealer family, etc.
+
+			The returned structure includes:
+			  {
+			    'breached_data': { ... },   # Results from /search-breach/
+			    'stealer_logs': { ... },    # Results from /search-stealer/
+			  }
+
+			This combined result gives both a macroscopic ("was I breached?") and microscopic ("what exact credentials were leaked?") view of
+			the entity's exposure footprint.
+		"""

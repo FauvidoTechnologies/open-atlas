@@ -898,6 +898,51 @@ VerifyAIGeneratedImage_engine_function_4 = {
     },
 }
 
+OathNet_engine_function_1 = {
+    "name": "get_breached_data",
+    "description": FunctionTools.OathNetEngine.get_breached_data,
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "query": {
+                "type": "string",
+                "description": "A phonenumber or email address or a username that you want to check for in databreaches",
+            }
+        },
+        "required": ["query"],
+    },
+}
+
+OathNet_engine_function_2 = {
+    "name": "get_stealer_logs",
+    "description": FunctionTools.OathNetEngine.get_stealer_logs,
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "query": {
+                "type": "string",
+                "description": "A phonenumber or email address or a username that you want to check for in databreaches",
+            }
+        },
+        "required": ["query"],
+    },
+}
+
+OathNet_engine_function_3 = {
+    "name": "combined_oathnet_search",
+    "description": FunctionTools.OathNetEngine.combined_oathnet_search,
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "query": {
+                "type": "string",
+                "description": "A phonenumber or email address or a username that you want to check for in databreaches",
+            }
+        },
+        "required": ["query"],
+    },
+}
+
 class_function_dict = {
     "RedditKnownEngine": [
         known_reddit_function_1,
@@ -964,5 +1009,10 @@ class_function_dict = {
         VerifyAIGeneratedImage_engine_function_2,
         VerifyAIGeneratedImage_engine_function_3,
         VerifyAIGeneratedImage_engine_function_4,
+    ],
+    "OathNetEngine": [
+        OathNet_engine_function_1,
+        OathNet_engine_function_2,
+        OathNet_engine_function_3,
     ],
 }

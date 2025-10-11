@@ -311,6 +311,13 @@ class UserAgents:
     instagram_ = "Mozilla/5.0"  # Do not use the full user-agent here because then insta will put you behind the login
 
 
+class OathNet:
+    base_url = "https://oathnet.org/api/service/"
+    init_url = "https://oathnet.org/api/service/search/init"
+    search_stealer_url = "https://oathnet.org/api/service/search-stealer/"
+    search_breach_url = "https://oathnet.org/api/service/search-breach/"
+
+
 class API:
     reddit = Reddit()
     instagram = Instagram()
@@ -319,6 +326,7 @@ class API:
     picarta = Picarta()
     github = GitHub()
     isgen = IsGen()
+    oathnet = OathNet()
 
 
 class Request:

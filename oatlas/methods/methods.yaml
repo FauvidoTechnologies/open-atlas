@@ -643,3 +643,38 @@ VerifyAIGeneratedImageEngine:
       returns:
         type: dict
         desc: "Aggregated verification result."
+OathNetSearchEngine:
+  common_name: "oathnet-search"
+  abbreviated_name: "OATH"
+  desc: "Client for OathNet search endpoints. Provides a Search Session initialization helper and wrappers for breach and stealer log searches. Handles session initialization, request parameters, headers and timeouts."
+  functions:
+    get_breached_data:
+      desc: "Hits the /search-breach/ endpoint with the query and a session_id. Returns the JSON payload from OathNet containing breach results."
+      arguments:
+        arg1:
+          value: "query"
+          desc: "Search query string (same as used to initialize the session)."
+      returns:
+        type: dict
+        desc: "JSON response from /search-breach/ (list of breaches, metadata, pagination fields if present)."
+    get_stealer_logs:
+      desc: "Hits the /search-stealer/ endpoint with the query and a session_id. Returns the JSON payload containing stealer log search results."
+      arguments:
+        arg1:
+          value: "query"
+          desc: "Search query string (same as used to initialize the session)."
+      returns:
+        type: dict
+        desc: "JSON response from /search-stealer/ (logs, sample entries, timestamps, etc.)."
+    combined_oathnet_search:
+      desc: "Convenience function that initializes a session then runs both breach and stealer searches and aggregates results."
+      arguments:
+        arg1:
+          value: "query"
+          desc: "Search query string."
+        arg2:
+          value: "include_raw"
+          desc: "Optional boolean flag; if true, include raw responses alongside normalized results."
+      returns:
+        type: dict
+        desc: "Aggregated results: { 'search_id': '<id>', 'breach': {...}, 'stealer': {...}, 'raw': { 'breach_raw': ..., 'stealer_raw': ... } }"
