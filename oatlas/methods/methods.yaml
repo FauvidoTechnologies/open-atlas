@@ -672,9 +672,6 @@ OathNetSearchEngine:
         arg1:
           value: "query"
           desc: "Search query string."
-        arg2:
-          value: "include_raw"
-          desc: "Optional boolean flag; if true, include raw responses alongside normalized results."
       returns:
         type: dict
-        desc: "Aggregated results: { 'search_id': '<id>', 'breach': {...}, 'stealer': {...}, 'raw': { 'breach_raw': ..., 'stealer_raw': ... } }"
+        desc: "Aggregated results: {'breach_data': {...}, 'stealer_data': {...}}"
