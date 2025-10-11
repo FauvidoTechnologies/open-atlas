@@ -64,6 +64,7 @@ hibp-api-key=None
 hunter_api_key=None
 isgen_api_key=None
 isgen_bearer=None
+oathnet_api_key=None
 ```
 
 > NOTE: All API keys are optional. Functions that don’t require them will work without issue.
@@ -75,6 +76,7 @@ isgen_bearer=None
 - `hunter_api_key` - Required for reverse-email lookups using [Hunter](https://hunter.io). Free-tier keys are sufficient.
 - `hibp_api_key` - Required for `HaveIBeenPwned` searches, this only has paid subscriptions sadly!
 - `isgen_api_key` & `isgen_bearer` - For AI image detection using [isgen](https://isgen.ai).
+- `oathnet_api_kee` - For getting data from breaches -> This uses the OathNet API service for retrieving this data. Its a [paid software however](https://oathnet.org/pricing)!
 
 > NOTE: You will require LLMs if you wish to run functions like for geolocation, you will need either one of the two API keys
 
