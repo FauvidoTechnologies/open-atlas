@@ -16,6 +16,8 @@ etc. all combined into one tool!
 
 `OAtlas` is designed for manual tool execution, making it ideal for industry experts who know exactly what they want to do. It also has a `plug-and-play` architecture which makes adding tools extremely easy. (refer to the `docs/` for more information on this)
 
+- For all the tools available currently, checkout the [tools section](./oatlas/tools/README.md)
+
 It is a port of `Atlas` which is an upcoming fully automated OSINT tool. For more information about [Atlas](#atlas), refer to the section at the end.
 
 If you need help obtaining API keys for certain functions, contact me at the email provided below. I can provide you with the necessary credentials.
