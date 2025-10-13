@@ -61,7 +61,7 @@ class ConfigBase:
 class Database(ConfigBase):
     """
 
-    Nettacker's database support
+    #### Nettacker's database support
 
     For SQLite (APSW) -> Default:
         engine: sqlite
@@ -81,7 +81,7 @@ class Database(ConfigBase):
     """
 
     engine = "sqlite"
-    name = str(PARENT_PATH / "data/atlas.db")
+    name = str(NETTACKER_PATH / ".nettacker/nettacker.db")
     host = ""
     port = ""
     username = ""
@@ -223,8 +223,7 @@ class Files:
     GeolocateImageVertexAI = PARENT_PATH / "utils/prompts/GeolocateImageVertexAI.txt"
 
     # Nettacker's configurations
-    nettacker_data_dir = NETTACKER_PATH / ".nettacker/data"
-    nettacker_database_file = NETTACKER_PATH / ".nettacker/data/nettacker.db"
+    nettacker_database_file = NETTACKER_PATH / ".nettacker/nettacker.db"
     nettacker_locale_dir = NETTACKER_PATH / "locale"  # Gonna remove this later
     nettacker_module_protocols_dir = (
         NETTACKER_PATH / "core/lib"

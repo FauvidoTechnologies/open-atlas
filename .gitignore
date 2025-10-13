@@ -11,3 +11,9 @@ oatlas/tools/image_analysis/__pycache__/*
 oatlas/tools/image_analysis/__pycache__
 oatlas/utils/__pycache__/
 oatlas/utils/__pycache__/*
+oatlas/tools/nettacker/core/__pycache__/
+oatlas/tools/nettacker/core/__pycache__/*
+oatlas/tools/nettacker/core/database/__pycache__/*
+oatlas/tools/nettacker/core/database/__pycache__/
+oatlas/tools/nettacker/core/utils/__pycache__/
+oatlas/tools/nettacker/core/utils/__pycache__/*

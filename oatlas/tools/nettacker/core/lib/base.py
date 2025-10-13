@@ -7,7 +7,7 @@ from datetime import datetime
 
 import yaml
 
-from oatlas.core.database.database import (
+from oatlas.tools.nettacker.core.database.database import (
     find_temp_events,
     submit_temp_logs_to_db,
     submit_logs_to_db,

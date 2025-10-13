@@ -49,15 +49,15 @@ log = get_logger()
 class NettackerEngine:
     """
     Functions for nettacker. We're only exposing the run function with a bunch of options.
+    
+    Note that we aren't instantiating the class, so we'll have to move all the dependency
+    management to inside the run() method.
     """
 
-    def __init__(self):
-        self.handle_dependencies()
-
-    def handle_dependencies(self):
+    def handle_dependencies():
         if Database.engine == "sqlite":
             try:
-                if not Config.path.database_file.exists():
+                if not Config.path.nettacker_database_file.exists():
                     sqlite_create_tables()
             except PermissionError:
                 die_failure("cannot access the database directory!")
@@ -214,6 +214,8 @@ class NettackerEngine:
 
         This is the main run function. Enjoy.
         """
+
+        NettackerEngine.handle_dependencies()
         # Build options object dynamically from arguments
         options = SimpleNamespace(
             targets=targets or [],
