@@ -1,9 +1,11 @@
 import sys
+import uuid
 from typing import List, Dict, Any
 
 import oatlas.tools
 from oatlas.config import Config, version_info, Database
 from oatlas.core.arg_parser import ArgParser
+from oatlas.core.database.db_funcs import add_logs_to_database
 from oatlas.core.lib.functions import class_function_dict
 from oatlas.logger import get_logger, TerminalCodes
 from oatlas.utils.dependency_manager import HandleDependencies
@@ -24,6 +26,8 @@ class OAtlas(ArgParser):
         functions = self.get_all_functions()
         self.func_to_class = self.function_to_class_dict()
         self.function_definitions = self.get_function_details(functions)
+
+        self.session_id = uuid.uuid4().hex
 
         super().__init__()
 
@@ -191,6 +195,9 @@ class OAtlas(ArgParser):
         try:
             result = callable_functions.get(func_name)(**arg_values)
             print(f"Result: {result}")
+            add_logs_to_database(
+                session_id=self.session_id, function_name=func_name, function_output=result
+            )
         except Exception as e:
             log.error(f"An error occurred while running '{func_name}': {e}")
 
