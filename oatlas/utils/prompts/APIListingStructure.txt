@@ -1,0 +1,1 @@
+{description}. The default supported version is the {current_version} one. The paid version for the API {paid_versions_available} supported. These are the paid versions|types that are supported: {available_paid_versions}
