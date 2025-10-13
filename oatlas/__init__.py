@@ -45,19 +45,31 @@ service_dictionary = {
         ],
     },
     "api_3": {
+        "name": "openai",
+        "description": "Optinal OpenAI support as a replacement for VertexAI",
+        "current_version": "free",
+        "paid_versions_available": "is",
+        "available_paid_versions": ["lots"],
+    },
+    "api_4": {
         "name": "picarta",  # The structure doesn't change only the key does so all versions are supported
         "description": "The picarta API is for image geolocation",
         "current_version": "Free",
         "paid_versions_available": "is",
         "available_paid_versions": ["wallet", "monthy-subscription", "enterprise"],
     },
-    "api_4": {
+    "api_5": {
         "name": "isgen",
         "description": "This is a `different` way of making the POST requests for AI image detection",
         "current_version": "Free",  # This is technically free
         "paid_versions_available": "is",
         "available_paid_versions": ["lots"],  # Update this
     },
+    "api_6": {
+        "name": "HIBP",
+        "description": "The HaveIBeenPwned API for checking if an email address/username has been a part of a data breach",
+        "current_version": "paid",  # There is no free tier, you have to pay for that.
+        "paid_versions_available": "is",
+        "available_paid_versions": ["lots"],
+    },
 }
-
-# There are more APIs, need to sit and document
