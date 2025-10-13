@@ -146,7 +146,7 @@ def nettacker_module_names() -> List[str]:
 
     So this ended up being more helpful. Keeping a cache added almost a 40% reduced start time! Beautiful
     """
-    from oatlas.config import Config
+    from oatlas.tools.nettacker.config import Config
 
     cache_path = Config.path.nettacker_cached_function_configs
     names_cache = cache_path.with_name(cache_path.stem + "_names.json")
@@ -193,7 +193,7 @@ async def _fetch_single(session: aiohttp.ClientSession, url: str) -> Dict[str, U
     This is used by the GetPagesEngine for making GET requests to multiple websites in a bulk
     using aiohttp.
     """
-    from atlas.config import Request
+    from oatlas.config import Request
 
     headers = {"User-Agent": Request.user_agents.common_linux, "Accept": "application/json"}
 

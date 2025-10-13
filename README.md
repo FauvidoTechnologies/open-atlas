@@ -14,13 +14,21 @@ etc. all combined into one tool!
 > [!NOTE]
 > Coming soon -> Court records finder with a locally indexed database
 
-`OAtlas` is designed for manual tool execution, making it ideal for industry experts who know exactly what they want to do. It also has a `plug-and-play` architecture which makes adding tools extremely easy. (refer to the `docs/` for more information on this)
+## Features
 
-- For all the tools available currently, checkout the [tools section](./oatlas/tools/README.md)
+1. `Variety of functions` at your disposal -> You can run Social media OSINT, image geolocations, web-domain enumerations, binary analysis, all from just one tool!
+2. `Looped execution` of functions -> Quickly run one, get an output, analyse it and run another
+3. `Plug-and-play` architecture -> Need some specific tool you must have? Add it to the cycle in under 5 mins. Read the [docs](./docs/adding_new_tools.md)!
+4. `Save logs` in a database -> Every function and every output is saved in a database. It supports `sqlite`, `mysql` and `postgresql` as of now. This makes report making easier.
+5. `Installs its dependencies` on its own -> Its very easy to setup, all you need to do is follow the instructions (which are just 2, clone and install), everything else will be handled for.
 
-It is a port of `Atlas` which is an upcoming fully automated OSINT tool. For more information about [Atlas](#atlas), refer to the section at the end.
+## All available tools
 
-If you need help obtaining API keys for certain functions, contact me at the email provided below. I can provide you with the necessary credentials.
+For all the tools available currently, checkout the [tools section](./oatlas/tools/README.md)
+
+## About Atlas
+
+`OAtlas` is a port of `Atlas` which is an upcoming **fully automated** OSINT tool. For more information about [Atlas](#atlas), refer to the section at the end.
 
 ## Installation
 
@@ -51,6 +59,8 @@ And you're golden! For oatlas usage, refer the [usage](#usage) section.
 > Note that `oatlas` will work only on linux and darwin systems for now. It hasn't been tested on freebsd or windows or others yet.
 
 ## Usage
+
+> If you need help obtaining API keys for certain functions, contact me at the email provided below. I can provide you with the necessary credentials.
 
 Some functions require API keys. Place them in the `.env.private` file:
 
@@ -110,6 +120,12 @@ Below is an example to show all the functions supported for `oatlas`:
 poetry run python3 oatlas.py --show-all-functions
 ```
 
+To get a list of all the APIs that `oatlas` is using:
+
+```sh
+poetry run python3 oatlas.py --show-api-services
+```
+
 Then you can choose any function to start the recursive engine (use `-v` for verbose mode):
 
 ```sh
@@ -134,7 +150,10 @@ poetry run python3 oatlas.py --start-web-server
 
 ## Atlas
 
-Atlas is a fully-automated (through AI) OSINT tool. It can do all your work for you.
+Atlas is a fully-automated (through AI) OSINT tool. Its still under development. It can do all the grunt work for you, for example, doing a full analysis on a target, displaying and saving logs, making a report and more. 
+
+> [!IMPORTANT]
+> It also sports a server, so your team can launch one locally, start multiple scans, take a coffee break and viola a few minutes later all the hardwork of trail-and-error has been done for you. Your team can now focus on the more harder parts of the investigation!
 
 Watch a demo here -> [demo](https://drive.google.com/file/d/1foBa7mQOJqXcLsD4xpSen7tXMjR2nQ8R/view?usp=drive_link).
 

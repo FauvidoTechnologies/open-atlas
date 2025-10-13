@@ -7,12 +7,12 @@ from datetime import datetime
 
 import yaml
 
+from oatlas.logger import get_logger, TerminalCodes
 from oatlas.tools.nettacker.core.database.database import (
     find_temp_events,
     submit_temp_logs_to_db,
     submit_logs_to_db,
 )
-from oatlas.logger import get_logger, TerminalCodes
 from oatlas.tools.nettacker.core.messages import messages as _
 from oatlas.tools.nettacker.core.utils.common import (
     merge_logs_to_list,

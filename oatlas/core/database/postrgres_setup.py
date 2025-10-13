@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError
 
-from oatlas.tools.nettacker.config import Database
-from oatlas.tools.nettacker.core.database.models import Base
+from oatlas.config import Database
+from oatlas.core.database.models import Base
 
 
 def postgres_create_database():

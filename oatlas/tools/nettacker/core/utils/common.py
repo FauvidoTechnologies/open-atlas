@@ -138,7 +138,7 @@ def remove_sensitive_header_keys(event):
     Returns:
         event: The json event without the sensitive headers
     """
-    from oatlas.config import sensitive_headers
+    from oatlas.tools.nettacker.config import sensitive_headers
 
     if not isinstance(event, dict):
         return event
@@ -267,7 +267,9 @@ def apply_data_functions(data):
 
         for fn_name in data[item]:
             if fn_name in AVAILABLE_DATA_FUNCTIONS[item]:
-                fn = getattr(importlib.import_module("oatlas.tools.nettacker.core.fuzzer"), fn_name)
+                fn = getattr(
+                    importlib.import_module("oatlas.tools.nettacker.core.fuzzer"), fn_name
+                )
                 if fn is not None:
                     original_data[item] = fn(data[item][fn_name])
 

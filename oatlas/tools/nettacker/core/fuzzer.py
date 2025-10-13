@@ -1,4 +1,4 @@
-from oatlas.config import Config
+from oatlas.tools.nettacker.config import Config
 
 
 def read_from_file(file_path):

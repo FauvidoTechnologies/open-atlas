@@ -2,7 +2,7 @@ import copy
 
 import yaml
 
-from oatlas.config import Config
+from oatlas.tools.nettacker.config import Config
 
 
 class TemplateLoader:

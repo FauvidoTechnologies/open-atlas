@@ -8,8 +8,8 @@ from typing import List, Optional
 
 import multiprocess
 
-from oatlas.config import Database, Config
 from oatlas.logger import get_logger
+from oatlas.tools.nettacker.config import Database, Config
 
 # Database functions have been moved to the main database manager
 from oatlas.tools.nettacker.core.database import (
@@ -49,7 +49,7 @@ log = get_logger()
 class NettackerEngine:
     """
     Functions for nettacker. We're only exposing the run function with a bunch of options.
-    
+
     Note that we aren't instantiating the class, so we'll have to move all the dependency
     management to inside the run() method.
     """
@@ -214,9 +214,9 @@ class NettackerEngine:
 
         This is the main run function. Enjoy.
         """
-
         NettackerEngine.handle_dependencies()
         # Build options object dynamically from arguments
+        print("created")
         options = SimpleNamespace(
             targets=targets or [],
             targets_list=targets_list,
@@ -282,7 +282,7 @@ class NettackerEngine:
                             "scan_id": scan_id,
                         }
                     )
-
+        print("never came here")
         for _i in range(target_groups.count([])):
             target_groups.remove([])
 

@@ -162,7 +162,7 @@ class StaticImageExtractionEngine:
         Args: image_path -> path to where the file is
         Returns: string of python dictionaries holding data
 
-        For more information on return type: atlas/utils/tool_descriptions
+        For more information on return type: oatlas/utils/tool_descriptions
         """
         result = rust.scan_firmware(image_path)
         return json.loads(result)

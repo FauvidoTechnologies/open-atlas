@@ -2,7 +2,7 @@ from io import StringIO
 
 import yaml
 
-from oatlas.config import Config
+from oatlas.tools.nettacker.config import Config
 
 
 def load_yaml(filename):

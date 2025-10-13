@@ -5,8 +5,8 @@ import os
 import time
 from threading import Thread
 
-from oatlas.config import Config
 from oatlas.logger import get_logger
+from oatlas.tools.nettacker.config import Config
 from oatlas.tools.nettacker.core.database.database import find_events
 from oatlas.tools.nettacker.core.messages import messages as _
 from oatlas.tools.nettacker.core.template import TemplateLoader
