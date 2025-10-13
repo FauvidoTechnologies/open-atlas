@@ -7,10 +7,54 @@ from pathlib import Path
 import requests
 
 from oatlas.config import Config
+from oatlas.core.database import (
+    sqlite_create_tables,
+    mysql_create_database,
+    mysql_create_tables,
+    postgres_create_database,
+)
 from oatlas.logger import get_logger
 from oatlas.utils.die import die_failure
 
 log = get_logger()
+
+
+class Database:
+    """
+    Creating and setting up the right databases and tables
+    """
+
+    def __init__(self, database):
+        self.database = database
+
+    def handle_dependencies(self):
+        """
+        Just do it
+        """
+        try:
+            Config.path.results_path.mkdir(exist_ok=True, parents=True)
+        except PermissionError:
+            die_failure(f"Cannot access the directory: {Config.path.results_path}")
+
+        if self.database.engine == "sqlite":
+            try:
+                if not Config.path.database_file.exists():
+                    sqlite_create_tables()
+            except PermissionError:
+                die_failure("cannot access the database directory!")
+        elif self.database.engine == "mysql":
+            try:
+                mysql_create_database()
+                mysql_create_tables()
+            except Exception:
+                die_failure("Database connection to MySQL failed!")
+        elif self.database.engine == "postgres":
+            try:
+                postgres_create_database()
+            except Exception:
+                die_failure("Database connection to PostgreSQL failed!")
+        else:
+            die_failure("Database not yet supported (or invalid)")
 
 
 class PlaywrightDependencies:
@@ -303,3 +347,4 @@ class HandleDependencies:
     rust = RustDependencies
     deepface = DeepFaceDependencies
     playwright = PlaywrightDependencies
+    database = Database

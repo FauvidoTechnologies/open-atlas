@@ -1,10 +1,13 @@
+import json
 import time
+from typing import Union, List, Dict
 
 import apsw
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from oatlas.config import Database, Config
+from oatlas.core.database.models import DBLogs
 from oatlas.logger import get_logger
 
 logging = get_logger()
@@ -105,3 +108,192 @@ def send_submit_query(session) -> bool:
             logging.warn("database connection failed")
             return False
         return False
+
+
+def add_logs_to_database(
+    session_id: str,
+    function_name: str,
+    function_output: str,
+) -> bool:
+    """
+    Function to add logs to the DBLogs table. For each session_id, the function_called and
+    function_output are maintained as stacks. If a record already exists, new logs are appended
+    to the existing stack; otherwise, a new record is created.
+
+    Args:
+        session_id: Unique identifier for this run
+        function_name: Name of the function being logged
+        function_output: Output of the function being logged
+
+    Returns:
+        boolean indicating success or failure
+    """
+    session = create_connection(Database)
+    if isinstance(session, tuple):
+        connection, cursor = session
+        try:
+            cursor.execute("BEGIN")
+            cursor.execute(
+                "SELECT function_called, function_output FROM DBLogs WHERE session_id = ?",
+                (session_id,),
+            )
+            record = cursor.fetchone()
+
+            if record:
+                current_functions, current_outputs = record
+                try:
+                    function_stack = json.loads(current_functions)
+                    output_stack = json.loads(current_outputs)
+                except json.JSONDecodeError:
+                    function_stack = [current_functions] if current_functions else []
+                    output_stack = [current_outputs] if current_outputs else []
+
+                function_stack.append(function_name)
+                output_stack.append(function_output)
+
+                cursor.execute(
+                    """
+                    UPDATE DBLogs
+                    SET function_called = ?, function_output = ?
+                    WHERE session_id = ?
+                    """,
+                    (json.dumps(function_stack), json.dumps(output_stack), session_id),
+                )
+
+            else:
+                cursor.execute(
+                    """
+                    INSERT INTO DBLogs (session_id, function_called, function_output)
+                    VALUES (?, ?, ?)
+                    """,
+                    (session_id, json.dumps([function_name]), json.dumps([function_output])),
+                )
+
+            return send_submit_query(session)
+
+        except Exception as e:
+            cursor.execute("ROLLBACK")
+            logging.warn(f"Could not add logs to DBLogs (SQLite): {e}")
+            return False
+        finally:
+            cursor.close()
+
+    else:
+        try:
+            record = session.query(DBLogs).filter_by(session_id=session_id).first()
+
+            if record:
+                try:
+                    function_stack = json.loads(record.function_called)
+                    output_stack = json.loads(record.function_output)
+                except json.JSONDecodeError:
+                    function_stack = [record.function_called] if record.function_called else []
+                    output_stack = [record.function_output] if record.function_output else []
+
+                function_stack.append(function_name)
+                output_stack.append(function_output)
+
+                record.function_called = json.dumps(function_stack)
+                record.function_output = json.dumps(output_stack)
+
+            else:
+                new_entry = DBLogs(
+                    session_id=session_id,
+                    function_called=json.dumps([function_name]),
+                    function_output=json.dumps([function_output]),
+                )
+                session.add(new_entry)
+
+            return send_submit_query(session)
+
+        except Exception as e:
+            logging.warn(f"Could not add logs to DBLogs (SQLAlchemy): {e}")
+            return False
+
+
+def get_logs_from_database(
+    session_id: str,
+    k: int = -1,
+) -> Union[List[Dict[str, str]], None]:
+    """
+    Function to retrieve the last `k` logs from the DBLogs table for a given session_id.
+    The logs are maintained as stacks (function_called, function_output). This function
+    returns the most recent `k` function-output pairs.
+
+    Args:
+        session_id: Unique identifier for this run
+        k: Number of recent entries to fetch (-1 returns the entire stack)
+
+    Returns:
+        A list of dictionaries in the format:
+            [
+                {"function_called": "func1", "function_output": "output1"},
+                {"function_called": "func2", "function_output": "output2"},
+                ...
+            ]
+        or None if no logs are found or an error occurs.
+    """
+    session = create_connection(Database)
+    if isinstance(session, tuple):
+        connection, cursor = session
+        try:
+            cursor.execute(
+                "SELECT function_called, function_output FROM DBLogs WHERE session_id = ?",
+                (session_id,),
+            )
+            record = cursor.fetchone()
+
+            if not record:
+                logging.warn(f"No logs found for session_id: {session_id}")
+                return None
+
+            functions_raw, outputs_raw = record
+            try:
+                function_stack = json.loads(functions_raw)
+                output_stack = json.loads(outputs_raw)
+            except json.JSONDecodeError:
+                function_stack = [functions_raw] if functions_raw else []
+                output_stack = [outputs_raw] if outputs_raw else []
+
+            if k != -1:
+                function_stack = function_stack[-k:]
+                output_stack = output_stack[-k:]
+
+            return [
+                {"function_called": f, "function_output": o}
+                for f, o in zip(function_stack, output_stack)
+            ]
+
+        except Exception as e:
+            logging.warn(f"Could not fetch logs from DBLogs (SQLite): {e}")
+            return None
+        finally:
+            cursor.close()
+
+    else:
+        try:
+            record = session.query(DBLogs).filter_by(session_id=session_id).first()
+
+            if not record:
+                logging.warn(f"No logs found for session_id: {session_id}")
+                return None
+
+            try:
+                function_stack = json.loads(record.function_called)
+                output_stack = json.loads(record.function_output)
+            except json.JSONDecodeError:
+                function_stack = [record.function_called] if record.function_called else []
+                output_stack = [record.function_output] if record.function_output else []
+
+            if k != -1:
+                function_stack = function_stack[-k:]
+                output_stack = output_stack[-k:]
+
+            return [
+                {"function_called": f, "function_output": o}
+                for f, o in zip(function_stack, output_stack)
+            ]
+
+        except Exception as e:
+            logging.warn(f"Could not fetch logs from DBLogs (SQLAlchemy): {e}")
+            return None

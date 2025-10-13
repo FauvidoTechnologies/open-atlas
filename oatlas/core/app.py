@@ -2,7 +2,7 @@ import sys
 from typing import List, Dict, Any
 
 import oatlas.tools
-from oatlas.config import Config, version_info
+from oatlas.config import Config, version_info, Database
 from oatlas.core.arg_parser import ArgParser
 from oatlas.core.lib.functions import class_function_dict
 from oatlas.logger import get_logger, TerminalCodes
@@ -84,7 +84,8 @@ class OAtlas(ArgParser):
             die_failure(
                 "The platform you're running Atlas on is not supported! Please use Darwin or Linux"
             )
-
+        # Create the databases and tables
+        HandleDependencies.database(Database).handle_dependencies()
         # Install playwright dependencies
         try:
             HandleDependencies.playwright().handle_dependencies()

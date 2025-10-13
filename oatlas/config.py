@@ -57,9 +57,6 @@ class ConfigBase:
 
 class Database(ConfigBase):
     """
-
-    #### Nettacker's database support
-
     For SQLite (APSW) -> Default:
         engine: sqlite
         name: location for the database
@@ -141,6 +138,7 @@ class Files:
     emails = CWD / "oatlas/files/emails.txt"
     banner_file = PARENT_PATH / "banner.txt"
     results_path = PARENT_PATH / "data"
+    database_file = PARENT_PATH / "data/oatlas.db"
     instagram_scraped_dir = CWD / "oatlas/tools/reverse_instagram_lookup/utils/scraped"
     methods_path = CWD / "oatlas/methods/methods.yaml"
     trufflehog_rules = CWD / "oatlas/tools/github_apis/trufflehog/static/rules.yml"
