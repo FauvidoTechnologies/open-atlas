@@ -153,7 +153,7 @@ class Module:
         for payload in self.module_content["payloads"]:
             library = payload["library"]
             engine = getattr(
-                importlib.import_module(f"atlas.tools.nettacker.core.lib.{library.lower()}"),
+                importlib.import_module(f"oatlas.tools.nettacker.core.lib.{library.lower()}"),
                 f"{library.capitalize()}Engine",
             )()
             for step in payload["steps"]:
