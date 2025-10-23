@@ -20,4 +20,4 @@ class ClassName:
 4. Now head over to `oatlas/core/lib/functions.py`. Add an entry for the class there and the functions defined inside the class. Make sure to add the class correctly inside `class_function_dict`. This is for bookkeeping.
 5. Edit the `oatlas/tools/__init__.py` file and import the engine name there.
 6. Update the `oatlas/methods/methods.yaml` file as well with whatever you have added.
-7. Create description for your functions over at `oatlas/utils/tool_descriptions`
+7. Create description for your functions over at `oatlas/utils/tool_descriptions.py`

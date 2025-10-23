@@ -943,6 +943,21 @@ OathNet_engine_function_3 = {
     },
 }
 
+BrowserAutomation_function_1 = {
+    "name": "run_automated_browser_instance",
+    "description": FunctionTools.BrowserAutomationEngine.run_automated_browser_instance,
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "prompt": {
+                "type": "string",
+                "description": "An instruction or task given to the model for running browsers on",
+            }
+        },
+        "required": ["prompt"],
+    },
+}
+
 class_function_dict = {
     "RedditKnownEngine": [
         known_reddit_function_1,
@@ -1015,4 +1030,5 @@ class_function_dict = {
         OathNet_engine_function_2,
         OathNet_engine_function_3,
     ],
+    "BrowserAutomationEngine": [BrowserAutomation_function_1],
 }

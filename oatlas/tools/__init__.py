@@ -20,3 +20,4 @@ from oatlas.tools.get_pages.fetch_get_pages import GetPagesEngine
 from oatlas.tools.hyperlink_extractor.extract_hyperlinks import HyperlinkExtractEngine
 from oatlas.tools.AI_image_detector.AI_image_analysis import VerifyAIGeneratedImageEngine
 from oatlas.tools.oathnet.oathnet import OathNetEngine
+from oatlas.tools.browser_automation.bautomation import BrowserAutomationEngine

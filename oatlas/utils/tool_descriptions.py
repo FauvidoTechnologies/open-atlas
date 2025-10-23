@@ -741,3 +741,11 @@ class FunctionTools:
 			This combined result gives both a macroscopic ("was I breached?") and microscopic ("what exact credentials were leaked?") view of
 			the entity's exposure footprint.
 		"""
+
+    class BrowserAutomationEngine:
+        run_automated_browser_instance = """
+			Uses the py-browser-automate library for running browser automations in python. Its fully automatic, and it takes in a prompt
+			which will be analysed and the browser's next step will be decided, and so on.
+
+			This is a synchronous endopoint which is exposed to the user. This can support using both gemini (through VertexAI) and GPT-4o using OpenAI.
+		"""

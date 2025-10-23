@@ -675,3 +675,17 @@ OathNetSearchEngine:
       returns:
         type: dict
         desc: "Aggregated results: {'breach_data': {...}, 'stealer_data': {...}}"
+BrowserAutomationEngine:
+  common_name: "browser-automation"
+  abbreviated_name: "BAE"
+  desc: "Client for automating Chromium browser sessions. Provides a helper to run browser instances with specific instructions or tasks. Handles session setup, page interactions, and execution of automated workflows."
+  functions:
+    run_automated_browser_instance:
+      desc: "Runs a Chromium browser instance and executes a given instruction or task. Useful for automated interactions, scraping, and testing workflows."
+      arguments:
+        prompt:
+          value: "prompt"
+          desc: "Instruction or task for the browser automation engine to perform."
+      returns:
+        type: dict
+        desc: "Results or status of the executed browser automation task, including any extracted data or completion metadata."

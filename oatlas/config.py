@@ -247,9 +247,16 @@ class Request:
     user_agents = UserAgents()
 
 
+class BA:
+    # By default I am including all login sites which are coded in the library
+    default_login_sites = ["instagram", "facebook"]
+    handle_dependencies = True
+
+
 class Config:
     path = Files()
     settings = Settings()
     messages = Messages()
     web = WebConfig()
     API = API()
+    browserautomations = BA()
