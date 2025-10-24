@@ -249,7 +249,9 @@ class Request:
 
 class BA:
     # By default I am including all login sites which are coded in the library
-    default_login_sites = ["instagram", "facebook"]
+    # default_login_sites = ["instagram", "facebook"]
+    default_login_sites = None  # We'll keep this at none. For setting the default you will have to edit your .etc file.
+    # Set the required usernames and passwords for the required login site in your .etc file
     handle_dependencies = True
 
 
