@@ -41,6 +41,8 @@ class BrowserAutomationEngine(ArgParser):
         engine = instance.get_automation_engine()
 
         # running the sync endpoint for now
-        engine.sync_run(
+        output = engine.sync_run(
             prompt=prompt, automated_login_sites=Config.browserautomations.default_login_sites
         )
+
+        return output

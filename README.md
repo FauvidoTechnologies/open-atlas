@@ -3,6 +3,7 @@
 **OAtlas** is an OSINT tool with 35+ functions to aid investigations. Imagine 
 
 - **reverse email/username lookups**
+- **no-code browser automations**
 - **GitHub secrets extraction**
 - **reddit/instagram/twitter information extraction**
 - **IP lookups**, **geolocation**
@@ -11,8 +12,10 @@
 
 etc. all combined into one tool!
 
-> [!NOTE]
-> Coming soon -> Court records finder with a locally indexed database
+> [!IMPORTANT]
+> We have created a library for fully no-code exploratory browser automations which we are using with oatlas!
+
+Check out no-code browser automation using an OpenAI or VertexAI key with `-f run_automated_browser_instance`. Also look at [pyba](https://github.com/FauvidoTechnologies/PyBrowserAutomation/) if you're interested in no-code automations.
 
 ## Features
 
