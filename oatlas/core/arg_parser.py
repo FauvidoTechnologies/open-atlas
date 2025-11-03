@@ -117,13 +117,7 @@ class ArgParser(ArgumentParser):
 
     def parse_arguments(self):
         """
-        check all rules and requirements for ARGS
-
-        Args:
-        api_forms: values from nettacker.api
-
-        Returns:
-        all ARGS with applied rules
+        Parse individual arguments and add them to this instance
         """
         options = self.parse_args()
 

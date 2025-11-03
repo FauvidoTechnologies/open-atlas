@@ -19,7 +19,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.10"
+python = "<4.0,>=3.10"
 requests = ">=2.32.4,<3.0.0"
 google-cloud-aiplatform = ">=1.105.0,<2.0.0"
 dnspython = ">=2.7.0,<3.0.0"
@@ -52,7 +52,7 @@ uvloop = "^0.21.0"
 zipp = "^3.23.0"
 c2pa-python = "^0.23.1"
 openai = "^2.2.0"
-py-browser-automation = "^0.1.5"
+py-browser-automation = "^0.2.1"
 
 [tool.poetry.group.dev.dependencies]
 ruff = ">=0.2.1,<0.8.0"
