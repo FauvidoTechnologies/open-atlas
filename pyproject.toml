@@ -52,7 +52,7 @@ uvloop = "^0.21.0"
 zipp = "^3.23.0"
 c2pa-python = "^0.23.1"
 openai = "^2.2.0"
-py-browser-automation = "^0.2.1"
+py-browser-automation = "^0.2.2"
 
 [tool.poetry.group.dev.dependencies]
 ruff = ">=0.2.1,<0.8.0"

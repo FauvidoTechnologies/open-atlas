@@ -249,10 +249,31 @@ class Request:
 
 class BA:
     # By default I am including all login sites which are coded in the library
-    # default_login_sites = ["instagram", "facebook"]
-    default_login_sites = None  # We'll keep this at none. For setting the default you will have to edit your .etc file.
-    # Set the required usernames and passwords for the required login site in your .etc file
+
+    # default_login_sites = ["instagram", "facebook", "gmail"]
+    default_login_sites = None  # We'll keep this at none. For setting the default you will have to edit your .env file.
+    # Set the required usernames and passwords for the required login site in your .env file
+
     handle_dependencies = True
+
+    class Database(ConfigBase):
+        engine = "sqlite"  # This can be sqlite, postgres or mysql
+        name = "/tmp/pyba.db"  # In case of postgres or mysql, change this to the database name
+        username = ""
+        password = ""
+        host = ""
+        port = ""
+        ssl_mode = "disabled"  # Set to required if using postgres and want encrypted databases
+
+    generate_code = False
+    code_output_path = (
+        "/tmp/pyba_script.py"  # Saving the automation script if using the generate_code feature
+    )
+    database_mode = False
+    enable_tracing = False
+    trace_save_directory = "/tmp/pyba/"
+    headless = False  # Run Oatlas no-code browser automation in headless mode
+    use_logger = True  # Start and use the pyba logger
 
 
 class Config:

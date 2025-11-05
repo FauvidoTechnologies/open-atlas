@@ -4275,14 +4275,14 @@ tests = ["pytest"]
 
 [[package]]
 name = "py-browser-automation"
-version = "0.2.1"
+version = "0.2.2"
 description = "Automate online browsing using python and AI"
 optional = false
 python-versions = "<4.0,>=3.10"
 groups = ["main"]
 files = [
-    {file = "py_browser_automation-0.2.1-py3-none-any.whl", hash = "sha256:e85727f1e5d4a7b2213d6129e7fd5d222a9c6b524222a1fcd5ee97f891095f11"},
-    {file = "py_browser_automation-0.2.1.tar.gz", hash = "sha256:69646d4fef166a1e3f6e471f73c45eecff4e71d80f171260e58f77c4f6ab40e8"},
+    {file = "py_browser_automation-0.2.2-py3-none-any.whl", hash = "sha256:11a93a03df406dbafb7295747e6301441e0f31df5254b31b1a563e709979863a"},
+    {file = "py_browser_automation-0.2.2.tar.gz", hash = "sha256:50fd02a96d473f22c5aa48cc5e65107313c1384a6963549f36ba3f0e8451bf2e"},
 ]
 
 [package.dependencies]
@@ -6529,4 +6529,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = "<4.0,>=3.10"
-content-hash = "0d505e9db3d7fa7032957fa5f51f09f855af859fd8e80b52e4c208e53cba05bd"
+content-hash = "b6fa7da093f7e02f75cfb5872a7c77e81b730839d9c9f3aa65e87287f9ad5d05"

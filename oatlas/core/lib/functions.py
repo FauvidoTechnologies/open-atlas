@@ -952,7 +952,27 @@ BrowserAutomation_function_1 = {
             "prompt": {
                 "type": "string",
                 "description": "An instruction or task given to the model for running browsers on",
-            }
+            },
+            "database_mode": {
+                "type": "boolean",
+                "description": "A True/False entry to specify if you wish to use the database mode. Note that the configurations for the database mode are selected from the config file",
+                "default": False,
+            },
+            "generate_code": {
+                "type": "boolean",
+                "description": "A True/Flase entry to specify if you wish to generate the automation script with playwright sync endpoints for reproducability",
+                "default": False,
+            },
+            "enable_tracing": {
+                "type": "boolean",
+                "description": "Enable playwright tracing to run the automation along with HTTP requests in playwright traceviewer",
+                "default": False,
+            },
+            "trace_save_directory": {
+                "type": "string",
+                "description": "The directory to save the traceviewing logs to",
+                "default": "/tmp/pyba/",
+            },
         },
         "required": ["prompt"],
     },

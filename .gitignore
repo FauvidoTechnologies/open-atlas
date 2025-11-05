@@ -18,3 +18,4 @@ oatlas/tools/nettacker/core/database/__pycache__/
 oatlas/tools/nettacker/core/utils/__pycache__/
 oatlas/tools/nettacker/core/utils/__pycache__/*
 docs/work.md
+__pycache__/
