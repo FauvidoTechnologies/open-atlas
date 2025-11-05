@@ -9,6 +9,7 @@
 - **IP lookups**, **geolocation**
 - **image metadata and exif extraction**
 - **AI generated/tweaked image checker** 
+- **no-code browser automations**
 
 etc. all combined into one tool!
 
