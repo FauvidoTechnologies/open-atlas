@@ -102,8 +102,11 @@ class Settings:
     show_help_menu = False
     location = "us-central1"  # Server location for VertexAI
     model = "gemini-2.5-pro"
-    openai_model = "gpt-5"  # This is nice
-    openai_api_key = "openai_api_key"
+    openai_model = "gpt-5"
+
+    # Keys => These will be called using os.getenv().
+    openai_api_key = "openai_api_key"  # The key used will be os.getenv("openai_api_key")
+    gemini_api_key = "gemini_api_key"
     project_id = "project_id"
     vertexai = True  # I know it seems dumb to keep this here but we'll use it later when we port to different models as well
     timeout = 0.1
@@ -274,6 +277,7 @@ class BA:
     trace_save_directory = "/tmp/pyba/"
     headless = False  # Run Oatlas no-code browser automation in headless mode
     use_logger = True  # Start and use the pyba logger
+    mode = None
 
 
 class Config:

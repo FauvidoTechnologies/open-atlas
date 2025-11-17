@@ -973,6 +973,12 @@ BrowserAutomation_function_1 = {
                 "description": "The directory to save the traceviewing logs to",
                 "default": "/tmp/pyba/",
             },
+            "mode": {
+                "type": "string",
+                "description": "The mode of operation, can be a Depth first or a breadth first seach, (DFS|BFS). Defaults at None",
+                "enum": ["DFS", "BFS"],
+                "default": None,
+            },
         },
         "required": ["prompt"],
     },

@@ -1,6 +1,7 @@
 import os
+from typing import Literal
 
-from pyba import Engine, Database
+from pyba import Engine, Database, DFS, BFS
 
 from oatlas.config import Config
 from oatlas.core.arg_parser import ArgParser
@@ -13,14 +14,15 @@ class BrowserAutomationEngine(ArgParser):
 
     def __init__(self):
         super().__init__()
-        self.use_openai = self.arguments.use_openai
-
         # VertexAI specific config
         self.project_id = os.getenv(Config.settings.project_id)
         self.location = Config.settings.location
 
         # OpenAI-specific configurations
         self.openai_api_key = os.getenv(Config.settings.openai_api_key)
+
+        # Gemini specific configuration
+        self.gemini_api_key = os.getenv(Config.settings.gemini_api_key)
 
     def get_database(self):
         # Returns the database instance based on the config values:
@@ -36,27 +38,32 @@ class BrowserAutomationEngine(ArgParser):
         headless: bool,
         use_logger: bool,
         database,
+        mode: Literal["DFS", "BFS"] = None,
     ):
-        # We need this to handle dependencies for us by default
-        if not self.use_openai:
-            engine = Engine(
-                vertexai_project_id=self.project_id,
-                vertexai_server_location=self.location,
-                handle_dependencies=Config.browserautomations.handle_dependencies,
-                database=database,
-                headless=headless,
-                use_logger=use_logger,
-                enable_tracing=enable_tracing,
-                trace_save_directory=trace_save_directory,
-            )
-        else:
-            engine = Engine(
-                openai_api_key=self.openai_api_key,
-                handle_dependencies=Config.browserautomations.handle_dependencies,
-                database=database,
-            )
+        cls = Engine if mode is None else (DFS if mode == "DFS" else BFS)
 
-        return engine
+        kwargs = {
+            "handle_dependencies": Config.browserautomations.handle_dependencies,
+            "database": database,
+            "headless": headless,
+            "use_logger": use_logger,
+            "enable_tracing": enable_tracing,
+            "trace_save_directory": trace_save_directory,
+        }
+
+        if self.project_id:
+            kwargs.update(
+                {
+                    "vertexai_project_id": self.project_id,
+                    "vertexai_server_location": self.location,
+                }
+            )
+        elif self.openai_api_key:
+            kwargs.update({"openai_api_key": self.openai_api_key})
+        else:
+            kwargs.update({"gemini_api_key": self.gemini_api_key})
+
+        return cls(**kwargs)
 
     @staticmethod
     def run_automated_browser_instance(
@@ -65,6 +72,7 @@ class BrowserAutomationEngine(ArgParser):
         generate_code: bool = Config.browserautomations.generate_code,
         enable_tracing: bool = Config.browserautomations.enable_tracing,
         trace_save_directory: str = Config.browserautomations.trace_save_directory,
+        mode: Literal["DFS", "BFS"] = Config.browserautomations.mode,
     ):
         instance = BrowserAutomationEngine()
 
@@ -79,6 +87,7 @@ class BrowserAutomationEngine(ArgParser):
             headless=Config.browserautomations.headless,
             use_logger=Config.browserautomations.use_logger,
             database=database,
+            mode=mode,
         )
 
         # running the sync endpoint for now
