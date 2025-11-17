@@ -278,6 +278,8 @@ class BA:
     headless = False  # Run Oatlas no-code browser automation in headless mode
     use_logger = True  # Start and use the pyba logger
     mode = None
+    max_depth = 10
+    max_breadth = 10
 
 
 class Config:

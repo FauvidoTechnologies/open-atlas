@@ -979,6 +979,16 @@ BrowserAutomation_function_1 = {
                 "enum": ["DFS", "BFS"],
                 "default": None,
             },
+            "max_depth": {
+                "type": "integer",
+                "description": "The maximum number of actions to be taken for each plan under DFS|BFS mode. Defaults at 10, only applicable to DFS|BFS modes",
+                "default": 10,
+            },
+            "max_breadth": {
+                "type": "integer",
+                "description": "The maximum number of plans to work under the DFS|BFS mode. Defaults at 10, only applicable to DFS|BFS modes",
+                "default": 10,
+            },
         },
         "required": ["prompt"],
     },

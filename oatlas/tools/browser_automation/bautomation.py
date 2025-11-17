@@ -38,7 +38,9 @@ class BrowserAutomationEngine(ArgParser):
         headless: bool,
         use_logger: bool,
         database,
-        mode: Literal["DFS", "BFS"] = None,
+        mode: Literal["DFS", "BFS"] = Config.browserautomations.mode,
+        max_depth: int = Config.browserautomations.max_depth,
+        max_breadth: int = Config.browserautomations.max_breadth,
     ):
         cls = Engine if mode is None else (DFS if mode == "DFS" else BFS)
 
@@ -50,6 +52,10 @@ class BrowserAutomationEngine(ArgParser):
             "enable_tracing": enable_tracing,
             "trace_save_directory": trace_save_directory,
         }
+
+        if cls in (DFS, BFS):
+            kwargs["max_depth"] = max_depth
+            kwargs["max_breadth"] = max_breadth
 
         if self.project_id:
             kwargs.update(
@@ -73,6 +79,8 @@ class BrowserAutomationEngine(ArgParser):
         enable_tracing: bool = Config.browserautomations.enable_tracing,
         trace_save_directory: str = Config.browserautomations.trace_save_directory,
         mode: Literal["DFS", "BFS"] = Config.browserautomations.mode,
+        max_depth: int = Config.browserautomations.max_depth,
+        max_breadth: int = Config.browserautomations.max_breadth,
     ):
         instance = BrowserAutomationEngine()
 
@@ -88,6 +96,8 @@ class BrowserAutomationEngine(ArgParser):
             use_logger=Config.browserautomations.use_logger,
             database=database,
             mode=mode,
+            max_depth=max_depth,
+            max_breadth=max_breadth,
         )
 
         # running the sync endpoint for now
